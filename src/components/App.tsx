@@ -5,7 +5,7 @@ import './styles/App.scss';
 function App(): JSX.Element {
   return(
     <div>
-      <h1>Creative Labs | notpron</h1>
+      <h1 className='text'>Creative Labs | notpron</h1>
     </div>
   );
 }
