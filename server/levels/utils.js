@@ -1,8 +1,9 @@
 const levels = require('./levels.json')
 const checkPassword = (name, password) => {
-    const level =  levels.find(level => 
+    console.log(name, password)
+    return levels.find(level => 
         (level.name === name && level.password === password));
-    return level ? level.nextLevel : null;
+
          
 }
 

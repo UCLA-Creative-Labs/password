@@ -1,14 +1,25 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import "./styles/App.scss";
 
-import './styles/App.scss';
-import {checkPassword} from  '../actions/Utils'
+import Level1 from "./Level1";
+import Home from "./Home";
 function App(): JSX.Element {
-  checkPassword({name: "level1", password:"abcd"})
-  return(
-    <div>
-      <h1 className='text'>Creative Labs | notpron</h1>
-    </div>
-  );
+    return (
+        <Router>
+            <Route exact path="/" render={Home} />
+            <Route
+                exact
+                path="/level1"
+                render={() => <Level1 name="level1" nextLevel="/level2" />}
+            ></Route>
+            <Route
+                exact
+                path="/level2"
+                render={() => <Level1 name="level2" nextLevel="/level3" />}
+            ></Route>
+        </Router>
+    );
 }
 
 export default App;

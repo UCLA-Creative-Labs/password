@@ -2,6 +2,11 @@
     {
         "name": "level1",
         "password": "abcd",
-        "nextLevel": "level2"
+        "nextLevel": ""
+    },
+    {
+        "name": "level2",
+        "password": "efgh",
+        "nextLevel": ""
     }
 ]
