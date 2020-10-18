@@ -8,7 +8,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var levelsRouter = require('./routes/levels')
 
+var cors = require('cors')
+
 var app = express();
+
+// Allow all CORS
+app.use(cors())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,5 +44,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;

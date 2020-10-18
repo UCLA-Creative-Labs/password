@@ -4,10 +4,11 @@ const url = require('url');
 const utils = require('../levels/utils')
 router.get("/", function(req, res, next) {
     const params = url.parse(req.url,true).query;
-    if (utils.checkPassword(params.name, params.password))
-        res.send("Congrats");
+    const nextLevel = utils.checkPassword(params.name, params.password);
+    if (nextLevel)
+        res.send({correct: true,nextLevel: nextLevel });
     else
-        res.send("Nope");
+        res.send({correct: false,nextLevel: nextLevel });
 });
 
 module.exports = router;
