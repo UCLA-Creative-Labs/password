@@ -13,8 +13,10 @@
     "eslint": "^7.6.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-react": "^7.20.5",
+    "firebase": "^7.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
