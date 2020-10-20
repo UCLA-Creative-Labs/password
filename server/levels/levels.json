@@ -1,0 +1,12 @@
+[
+    {
+        "name": "level1",
+        "password": "abcd",
+        "nextLevel": ""
+    },
+    {
+        "name": "level2",
+        "password": "efgh",
+        "nextLevel": ""
+    }
+]
