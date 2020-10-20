@@ -22,15 +22,15 @@ const config = {
 firebase.initializeApp(config);
 
 function App(): JSX.Element {
-  const [user, setUser] = useState<Object>({});
+  const [user, setUser] = useState<Record<string, any>>({});
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+    void firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    firebase.auth().onAuthStateChanged((u) => {
+      if (u) {
         setIsSignedIn(true);
-        setUser(user);
+        setUser(u);
       }
     });
   });
@@ -48,11 +48,10 @@ function App(): JSX.Element {
       },
     },
   };
-
   const signOut = () => {
-    firebase.auth().signOut().then(() => setIsSignedIn(false));
-  }
-  
+    void firebase.auth().signOut().then(() => setIsSignedIn(false));
+  };
+
   if (!isSignedIn) {
     return (
       <div id='authWrapper'>
