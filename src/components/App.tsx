@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './styles/App.scss';
 
-import { throwError } from '../utils/Utils';
 import Home from './Home';
 import Level1 from './Level1';
 
@@ -47,11 +46,6 @@ function App(): JSX.Element {
         return false;
       },
     },
-  };
-
-  // Write a button to allow for anonymous sign in?
-  const anonymousSignIn = () => {
-    firebase.auth().signInAnonymously().catch(error => throwError(error));
   };
 
   const signOut = () => {
