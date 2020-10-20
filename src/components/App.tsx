@@ -14,7 +14,7 @@ const config = {
   storageBucket: process.env.STORAGE_BUCKET,
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID
+  measurementId: process.env.MEASUREMENT_ID,
 };
 firebase.initializeApp(config);
 
@@ -25,31 +25,30 @@ function App(): JSX.Element {
     signInFlow: 'popup',
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
       signInSuccessWithAuthResult: () => {
-        setIsSignedIn(true); 
+        setIsSignedIn(true);
         return false;
-      }
-    }
+      },
+    },
   };
 
   // Write a button to allow for anonymous sign in?
   const anonymousSignIn = () => {
     firebase.auth().signInAnonymously().catch(function(error) {
-      console.error(`Error ${error.code}: ${error.message}`)
+      throw new Error (`Error ${error.code}: ${error.message}`);
     });
-    
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         setIsSignedIn(true);
       }
     });
-  }
+  };
 
   if (!isSignedIn) {
-    return ( 
+    return (
       <div id='authWrapper'>
         <div className='text' id='signIn'> Sign In </div>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
