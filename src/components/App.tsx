@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './styles/App.scss';
 
+import Header from './Header';
 import Home from './Home';
 import Level1 from './Level1';
 
@@ -61,8 +62,8 @@ function App(): JSX.Element {
     );
   }
   return (
-    <div>
-      <button onClick={signOut}>Sign Out</button>
+    <div className='app'>
+      <Header signOut={signOut} />
       <Router>
         <Route exact path="/" render={Home} />
         <Route
