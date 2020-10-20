@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import { UserInfo } from '../utils/firebase';
+
 import './styles/App.scss';
 
 import Header from './Header';
@@ -22,7 +24,7 @@ const config = {
 firebase.initializeApp(config);
 
 function App(): JSX.Element {
-  const [user, setUser] = useState<Record<string, any>>({});
+  const [user, setUser] = useState<UserInfo>({});
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
@@ -30,10 +32,12 @@ function App(): JSX.Element {
     firebase.auth().onAuthStateChanged((u) => {
       if (u) {
         setIsSignedIn(true);
-        setUser(u);
+        if (Object.keys(user).length === 0){
+          postUser(u);
+        }
       }
     });
-  });
+  }, []);
 
   const uiConfig = {
     signInFlow: 'popup',
@@ -48,9 +52,28 @@ function App(): JSX.Element {
       },
     },
   };
-  const signOut = () => {
+  const signOut = (): void => {
     void firebase.auth().signOut().then(() => setIsSignedIn(false));
   };
+
+  function postUser(auth_user: any): void {
+    const document = firebase.firestore().collection('users').doc(auth_user.uid);
+    void document.get().then((doc: any) => {
+      setUser(doc.exists ? doc.data() : putUser(auth_user));
+    });
+  }
+
+  function putUser(auth_user: any): UserInfo {
+    const collection = firebase.firestore().collection('users');
+    const profile = auth_user.providerData[0];
+    const deets: UserInfo = {
+      name: profile.displayName,
+      email: profile.email,
+      level: 0,
+    };
+    void collection.doc(auth_user.uid).set(deets);
+    return deets;
+  }
 
   if (!isSignedIn) {
     return (
@@ -60,6 +83,7 @@ function App(): JSX.Element {
       </div>
     );
   }
+
   return (
     <div className='app'>
       <Header signOut={signOut} />
