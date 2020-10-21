@@ -1,14 +1,14 @@
 // Template for levels that uses passwords and is linked to the next level.
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { useInput, checkPassword } from './Utils';
+import { useInput, checkPassword } from '../utils/Utils';
 
-interface props {
+interface LevelProps {
   name: string;
   nextLevel: string;
 }
 
-function Level1(props: props): JSX.Element {
+function Level1(props: LevelProps): JSX.Element {
   const [redirect, setRedirect] = useState(false);
   const { value, bind, reset } = useInput('');
 
