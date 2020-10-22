@@ -1,9 +1,9 @@
 
-import React, { useContext, useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { _Firebase, UserInfo } from '../utils/firebase';
+import { _Firebase } from '../utils/firebase';
 
 import './styles/App.scss';
 
@@ -14,17 +14,11 @@ import Level1 from './Level1';
 export const FirebaseClassContext = createContext(new _Firebase());
 
 export default function App(): JSX.Element {
-  
-  const [user, setUser] = useState<UserInfo>({});
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [_firebase] = useState<_Firebase>(new _Firebase());
 
   useEffect(() => {
-    _firebase.load({
-      setIsSignedIn,
-      setUser,
-      user,
-    });
+    _firebase.load({ setIsSignedIn });
   }, []);
 
   if (!isSignedIn) {

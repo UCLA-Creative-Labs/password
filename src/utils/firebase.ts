@@ -1,4 +1,3 @@
-import {createContext, useState} from 'react';
 import firebase from 'firebase';
 
 const config = {
@@ -21,27 +20,24 @@ export interface UserInfo {
 
 export interface _FirebaseProps {
   setIsSignedIn: (b: boolean) => void;
-  setUser: (u: UserInfo) => void;
-  user: UserInfo;
 }
 
-export class _Firebase extends Object {
+export class _Firebase {
 
   public setIsSignedIn: (b: boolean) => void;
   public user: UserInfo;
 
   public constructor(){
-    super();
-    this.setIsSignedIn = (_b) => {}; 
-    this.user = {}; 
+    this.setIsSignedIn = (b) => {b;};
+    this.user = {};
   }
 
-  public load(props: _FirebaseProps) {
+  public load(props: _FirebaseProps): void  {
     this.setIsSignedIn = props.setIsSignedIn;
-    this.user = props.user;
+    this.user = {};
 
     void firebase.auth(app).setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    firebase.auth(app).onAuthStateChanged((user) => {
+    firebase.auth(app).onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
         this.setIsSignedIn(true);
         if (Object.keys(this.user).length === 0){
@@ -51,7 +47,7 @@ export class _Firebase extends Object {
     });
   }
 
-  public uiConfig(){
+  public uiConfig(): firebaseui.auth.Config {
     return {
       signInFlow: 'popup',
       signInOptions: [
@@ -64,32 +60,32 @@ export class _Firebase extends Object {
           return false;
         },
       },
-    }
+    };
   }
 
-  public auth(){
+  public auth(): firebase.auth.Auth {
     return firebase.auth(app);
   }
 
-  public signOut() {
-    this.user = {};
-    firebase.auth(app).signOut().then(() => this.setIsSignedIn(false));
-  };
+  public signOut(): void {
+    void firebase.auth(app).signOut().then(() => this.user = {});
+  }
 
-  public postUser(auth_user: any, setState?: (t: UserInfo) => void ): void {
+  public postUser(auth_user: firebase.User, setState?: (t: UserInfo) => void ): void {
     const document = firebase.firestore(app).collection('users').doc(auth_user.uid);
-    void document.get().then((doc: any) => {
-      this.user = doc.exists ? doc.data() : this.putUser(auth_user)
+    void document.get().then((doc) => {
+      this.user = doc.exists ? doc.data() : this.putUser(auth_user);
       if (setState) setState(this.user);
     });
   }
 
-  public putUser(auth_user: any): UserInfo {
+  public putUser(auth_user: firebase.User): UserInfo {
     const collection = firebase.firestore(app).collection('users');
     const profile = auth_user.providerData[0];
+
     const deets: UserInfo = {
-      name: profile.displayName,
-      email: profile.email,
+      name: profile?.displayName ?? 'Anonymous User',
+      email: profile?.email ?? 'N/A',
       level: 0,
     };
     void collection.doc(auth_user.uid).set(deets);
