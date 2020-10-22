@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import {FirebaseClassContext} from './App';
+import { _Firebase } from '../utils/firebase';
 import './styles/Header.scss';
 
-interface HeaderProps {
-  signOut: () => void;
-}
+// interface HeaderProps {
+//   firebase: _Firebase;
+// }
 
-function Header(props: HeaderProps): JSX.Element {
+function Header(): JSX.Element {
+  const _firebase = useContext(FirebaseClassContext);
   return (
     <div id='header'>
-      <button id='signout' onClick={props.signOut}>Sign Out</button>
+      <button id='signout' onClick={_firebase.signOut}>Sign Out</button>
     </div>
   );
 }
