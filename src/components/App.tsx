@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, createContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -9,7 +8,7 @@ import './styles/App.scss';
 
 import Header from './Header';
 import Home from './Home';
-import Level1 from './Level1';
+import { LEVELS } from './Levels';
 
 export const FirebaseClassContext = createContext(new _Firebase());
 
@@ -36,16 +35,16 @@ export default function App(): JSX.Element {
         <Header/>
         <Router>
           <Route exact path="/" render={Home} />
-          <Route
-            exact
-            path="/level1"
-            render={() => <Level1 name="level1" nextLevel="/level2" />}
-          ></Route>
-          <Route
-            exact
-            path="/level2"
-            render={() => <Level1 name="level2" nextLevel="/level3" />}
-          ></Route>
+          {
+            Object.keys(LEVELS).map(levelUrl =>
+              <Route
+                key={levelUrl}
+                exact
+                path={`/${levelUrl}`}
+                render={() => LEVELS[levelUrl]}
+              ></Route>
+            )
+          }
         </Router>
       </div>
     </FirebaseClassContext.Provider>

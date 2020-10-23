@@ -1,5 +1,7 @@
 import firebase from 'firebase';
 
+import { INITIAL_LEVEL } from '../components/Levels';
+
 const config = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -15,7 +17,7 @@ const app = firebase.initializeApp(config);
 export interface UserInfo {
   name?: string,
   email?: string,
-  level?: number,
+  level?: string,
 }
 
 export interface _FirebaseProps {
@@ -25,11 +27,10 @@ export interface _FirebaseProps {
 export class _Firebase {
 
   public setIsSignedIn: (b: boolean) => void;
-  public user: UserInfo;
+  public user?: UserInfo;
 
   public constructor(){
     this.setIsSignedIn = (b) => {b;};
-    this.user = {};
   }
 
   public load(props: _FirebaseProps): void  {
@@ -40,7 +41,7 @@ export class _Firebase {
     firebase.auth(app).onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
         this.setIsSignedIn(true);
-        if (Object.keys(this.user).length === 0){
+        if (this.user && Object.keys(this.user).length === 0){
           this.postUser(user);
         }
       }
@@ -75,7 +76,7 @@ export class _Firebase {
     const document = firebase.firestore(app).collection('users').doc(auth_user.uid);
     void document.get().then((doc) => {
       this.user = doc.exists ? doc.data() : this.putUser(auth_user);
-      if (setState) setState(this.user);
+      if (setState && this.user) setState(this.user);
     });
   }
 
@@ -86,7 +87,7 @@ export class _Firebase {
     const deets: UserInfo = {
       name: profile?.displayName ?? 'Anonymous User',
       email: profile?.email ?? 'N/A',
-      level: 0,
+      level: INITIAL_LEVEL,
     };
     void collection.doc(auth_user.uid).set(deets);
     return deets;
