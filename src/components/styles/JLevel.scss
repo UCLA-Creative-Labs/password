@@ -1,5 +1,5 @@
 .imgCont {
-  position: relative;  
+  position: absolute;  
   top: 0;
   left: 0;
 }
@@ -16,12 +16,18 @@
   height: auto;
   width: 66%;
 }
+.fcont {
+    position: absolute;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 .cont2 {
   position: absolute;
-  top: 16.65%;
-  left: 12%;
-  width: 66%;
-  height: 66%;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
 }
 .backImg {
   position: relative;
