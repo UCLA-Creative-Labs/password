@@ -1,0 +1,74 @@
+.imgCont {
+  position: relative;  
+  top: 0;
+  left: 0;
+}
+.back {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  top: 0;
+  left: 0;
+}
+.cont3 {
+  position: absolute;
+  margin: 0 auto;
+  height: auto;
+  width: 66%;
+}
+.cont2 {
+  position: absolute;
+  top: 16.65%;
+  left: 12%;
+  width: 66%;
+  height: 66%;
+}
+.backImg {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 960px;
+  height: 540px;
+}
+.leftImg {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  top: 0%;
+  left: 0%;
+}
+.rightImg {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  top: 0%;
+  left: 0%;
+}
+.frontImg {
+  position: absolute;
+  top: 90px;
+  left: 160px;
+  width: 640px;
+  height: 360px;
+}
+.frontImg1 {
+  position: absolute;
+  top: 150px;
+  left: 267px;
+  width: 427px;
+  height: 240px;
+}
+.frontImg2 {
+  position: absolute;
+  top: 190px;
+  left: 338px;
+  width: 285px;
+  height: 160px;
+}
+.frontImg3 {
+  position: absolute;
+  top: 217px;
+  left: 385px;
+  width: 190px;
+  height: 107px;
+}
