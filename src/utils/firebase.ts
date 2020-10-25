@@ -118,5 +118,3 @@ export class _Firebase {
     return deets;
   }
 }
-
-
