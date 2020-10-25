@@ -30,7 +30,7 @@ export interface UserInfo {
 export interface _FirebaseProps {
   /**
    * The hook for initializing the _Firebase.load()
-   * 
+   *
    * @param b the boolean value to change app state
    */
   setIsSignedIn: (b: boolean) => void;
@@ -64,9 +64,9 @@ export class _Firebase {
    *
    * 1. Set the persistence for the firebase.app to persist locally
    * 2. Sign in the user and store the auth_user
-   * 3. Update this.user with through a POST 
+   * 3. Update this.user with through a POST
    *
-   * @param props the properties to for load 
+   * @param props the properties to for load
    */
   public load(props: _FirebaseProps): void  {
     this.setIsSignedIn = props.setIsSignedIn;
@@ -78,7 +78,7 @@ export class _Firebase {
         this.setIsSignedIn(true);
         this.auth_user = user;
         if (this.user && Object.keys(this.user).length === 0){
-          this.postUser();
+          void this.postUser();
         }
       }
     });
@@ -146,7 +146,7 @@ export class _Firebase {
 
   /**
    * UPDATE operation for the user.
-   * 
+   *
    * @param updates the updated user object, defaults to this.user if not passed in
    */
   public updateUser(updates: UserInfo): Promise<any> | undefined {
