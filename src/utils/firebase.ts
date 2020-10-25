@@ -15,27 +15,59 @@ const config = {
 };
 const app = firebase.initializeApp(config);
 
+/**
+ * The UserInfo that the app needs to process levels
+ */
 export interface UserInfo {
   name?: string,
   email?: string,
   level?: string,
 }
 
+/**
+ * The props for the _Firebase Class
+ */
 export interface _FirebaseProps {
+  /**
+   * The hook for initializing the _Firebase.load()
+   * 
+   * @param b the boolean value to change app state
+   */
   setIsSignedIn: (b: boolean) => void;
 }
 
+/**
+ * The class to perform operations on Firebase
+ */
 export class _Firebase {
-
+  /**
+   * the sign in hook
+   */
   public setIsSignedIn: (b: boolean) => void;
+  /**
+   * user info will be stored here
+   */
   public user?: UserInfo;
-
+  /**
+   * the authenticated user information
+   *
+   * Used for the firebase CRUD operations
+   */
   protected auth_user?: firebase.User;
 
   public constructor(){
     this.setIsSignedIn = (b) => {b;};
   }
 
+  /**
+   * When component mounts, run the this function.
+   *
+   * 1. Set the persistence for the firebase.app to persist locally
+   * 2. Sign in the user and store the auth_user
+   * 3. Update this.user with through a POST 
+   *
+   * @param props the properties to for load 
+   */
   public load(props: _FirebaseProps): void  {
     this.setIsSignedIn = props.setIsSignedIn;
     this.user = {};
@@ -47,12 +79,14 @@ export class _Firebase {
         this.auth_user = user;
         if (this.user && Object.keys(this.user).length === 0){
           this.postUser();
-          console.log(this.auth_user)
         }
       }
     });
   }
 
+  /**
+   * @returns the UI Configuration for StyledFirebaseAuth
+   */
   public uiConfig(): firebaseui.auth.Config {
     return {
       signInFlow: 'popup',
@@ -69,48 +103,66 @@ export class _Firebase {
     };
   }
 
+  /**
+   * @returns the firebase.app
+   */
   public auth(): firebase.auth.Auth {
     return firebase.auth(app);
   }
 
+  /**
+   * Sign out and empty this.user
+   */
   public signOut(): void {
     void firebase.auth(app).signOut().then(() => this.user = {});
   }
 
-  protected retrieveDocument(ternaryOp: any, setState?: (t: UserInfo) => void) {
+  /**
+   * Retrieves the document on a user and perform an operation
+   *
+   * @param ternaryOp if the document doesnt exist, complete this operation
+   */
+  protected retrieveDocument(ternaryOp: any) {
     if(!this.auth_user) return;
-    console.log(this);
-    console.log(this.auth_user.uid);
     const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
-    void document.get().then((doc) => {
-      console.log(doc.exists);
-      this.user = doc.exists ? doc.data() : ternaryOp;
-      if (setState && this.user) setState(this.user);
+    return document.get().then((doc) => {
+      return doc.exists ? doc.data() : ternaryOp;
     });
   }
 
-  public getUser(setState: (t: UserInfo) => void): void {
-    console.log('get');
-    this.retrieveDocument({}, setState);
+  /**
+   * GET operation for the user.
+   */
+  public getUser(): Promise<any> | undefined {
+    return this.retrieveDocument({});
   }
 
-  public postUser(setState?: (t: UserInfo) => void ): void {
-    console.log('post');
-    this.retrieveDocument(this.putUser(), setState);
+  /**
+   * POST operation for the user.
+   */
+  public postUser(): Promise<any> | undefined {
+    return this.retrieveDocument(this.putUser());
   }
 
-  public updateUser(updates: UserInfo): void {
+  /**
+   * UPDATE operation for the user.
+   * 
+   * @param updates the updated user object, defaults to this.user if not passed in
+   */
+  public updateUser(updates: UserInfo): Promise<any> | undefined {
     if(!this.auth_user) return;
     const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
-
     const updatedUser: UserInfo = {
       name: updates.name ?? this.user?.name,
       email: updates.email ?? this.user?.email,
       level: updates.level ?? this.user?.level,
     };
-    void document.update(updatedUser);
+    return document.update(updatedUser);
   }
 
+  /**
+   * PUT operation for the user.
+   */
   public putUser(): UserInfo {
     if(!this.auth_user) return {};
     const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
