@@ -1,5 +1,8 @@
 import firebase from 'firebase';
 
+// import { INITIAL_LEVEL } from '../components/Levels';
+const INITIAL_LEVEL = 'level1';
+
 const config = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -15,7 +18,7 @@ const app = firebase.initializeApp(config);
 export interface UserInfo {
   name?: string,
   email?: string,
-  level?: number,
+  level?: string,
 }
 
 export interface _FirebaseProps {
@@ -25,11 +28,12 @@ export interface _FirebaseProps {
 export class _Firebase {
 
   public setIsSignedIn: (b: boolean) => void;
-  public user: UserInfo;
+  public user?: UserInfo;
+
+  protected auth_user?: firebase.User;
 
   public constructor(){
     this.setIsSignedIn = (b) => {b;};
-    this.user = {};
   }
 
   public load(props: _FirebaseProps): void  {
@@ -40,8 +44,10 @@ export class _Firebase {
     firebase.auth(app).onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
         this.setIsSignedIn(true);
-        if (Object.keys(this.user).length === 0){
-          this.postUser(user);
+        this.auth_user = user;
+        if (this.user && Object.keys(this.user).length === 0){
+          this.postUser();
+          console.log(this.auth_user)
         }
       }
     });
@@ -71,26 +77,51 @@ export class _Firebase {
     void firebase.auth(app).signOut().then(() => this.user = {});
   }
 
-  public postUser(auth_user: firebase.User, setState?: (t: UserInfo) => void ): void {
-    const document = firebase.firestore(app).collection('users').doc(auth_user.uid);
+  protected retrieveDocument(ternaryOp: any, setState?: (t: UserInfo) => void) {
+    if(!this.auth_user) return;
+    console.log(this);
+    console.log(this.auth_user.uid);
+    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
     void document.get().then((doc) => {
-      this.user = doc.exists ? doc.data() : this.putUser(auth_user);
-      if (setState) setState(this.user);
+      console.log(doc.exists);
+      this.user = doc.exists ? doc.data() : ternaryOp;
+      if (setState && this.user) setState(this.user);
     });
   }
 
-  public putUser(auth_user: firebase.User): UserInfo {
-    const collection = firebase.firestore(app).collection('users');
-    const profile = auth_user.providerData[0];
+  public getUser(setState: (t: UserInfo) => void): void {
+    console.log('get');
+    this.retrieveDocument({}, setState);
+  }
+
+  public postUser(setState?: (t: UserInfo) => void ): void {
+    console.log('post');
+    this.retrieveDocument(this.putUser(), setState);
+  }
+
+  public updateUser(updates: UserInfo): void {
+    if(!this.auth_user) return;
+    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
+
+    const updatedUser: UserInfo = {
+      name: updates.name ?? this.user?.name,
+      email: updates.email ?? this.user?.email,
+      level: updates.level ?? this.user?.level,
+    };
+    void document.update(updatedUser);
+  }
+
+  public putUser(): UserInfo {
+    if(!this.auth_user) return {};
+    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
+    const profile = this.auth_user.providerData[0];
 
     const deets: UserInfo = {
       name: profile?.displayName ?? 'Anonymous User',
       email: profile?.email ?? 'N/A',
-      level: 0,
+      level: INITIAL_LEVEL,
     };
-    void collection.doc(auth_user.uid).set(deets);
+    void document.set(deets);
     return deets;
   }
 }
-
-
