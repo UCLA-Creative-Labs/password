@@ -13,6 +13,9 @@ const prompts = [
   "It's been almost a decade since I last saw my mother. And she still reminds me every day that if I misbehave again she'll take my hearing too.",
   "They say we have a primal sense, that we can just feel when someone is watching us. It's been a few weeks, and it's clear that you do not have that sense.",
 ];
+
+const typingTime = 5;
+const startingTime = 3;
 interface LevelProps {
   name: string;
   nextLevel: string;
@@ -20,15 +23,18 @@ interface LevelProps {
 
 interface RaceTrackProps {
   setRestart?: React.Dispatch<React.SetStateAction<boolean>>;
+  setTimeOut?: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const RaceTrack = React.memo(({ setRestart }: RaceTrackProps) => {
+
+// Renders the car and timer. When timer runs out, it prompts user to restart
+const RaceTrack = React.memo(({ setRestart, setTimeOut }: RaceTrackProps) => {
   return (
-    <div id="RaceTrack">
+    <div id="RaceTrack" style={{ width: '75%' }}>
       <img
         src={car}
         style={{
-          width: '58px',
-          height: '24px',
+          width: '80px',
+          height: '35px',
           border: '0',
           display: 'inline-block',
         }}
@@ -37,6 +43,7 @@ const RaceTrack = React.memo(({ setRestart }: RaceTrackProps) => {
         <Countdown
           renderer={({ seconds, completed }) => {
             if (completed) {
+              if (setTimeOut) setTimeOut(true);
               return (
                 <span style={{ position: 'absolute', width: '100%' }}>
                   <p
@@ -65,12 +72,14 @@ const RaceTrack = React.memo(({ setRestart }: RaceTrackProps) => {
               );
             }
             return (
-              <span style={{ right: '5vw', position: 'absolute' }}>
+              <span
+                style={{ right: '25%', position: 'absolute', color: 'red' }}
+              >
                 :{seconds}
               </span>
             );
           }}
-          date={Date.now() + 5000}
+          date={Date.now() + typingTime * 1000}
         ></Countdown>
       )}
       <hr
@@ -80,6 +89,7 @@ const RaceTrack = React.memo(({ setRestart }: RaceTrackProps) => {
   );
 });
 
+// The text prompt. The user can change this ;)
 interface PromptProps {
   prompt: string;
   setPrompt: React.Dispatch<React.SetStateAction<string>>;
@@ -88,8 +98,7 @@ function TextPrompt({ prompt, setPrompt }: PromptProps): JSX.Element {
   return (
     <div>
       <form>
-        <input
-          type="text"
+        <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           style={{
@@ -97,80 +106,99 @@ function TextPrompt({ prompt, setPrompt }: PromptProps): JSX.Element {
             fontSize: '20px',
             border: 'none',
             outline: 'none',
+            width: '75%',
           }}
         />
       </form>
     </div>
   );
 }
+
 function Level2(props: LevelProps): JSX.Element {
   const [redirect, setRedirect] = useState(false);
   const [input, setInput] = useState('');
-  const [prompt, setPrompt] = useState('hello sirr');
+  const [prompt, setPrompt] = useState(
+    prompts[Math.floor(Math.random() * prompts.length)]
+  );
   const [restart, setRestart] = useState(true);
+  const [timeOut, setTimeOut] = useState(true);
+  // True at the first load up and when user clicks restart button after losing
   if (restart) {
     return (
       <div>
         <p style={{ textAlign: 'center' }}>Type Racing</p>
-
-        <RaceTrack />
-        <div style={{ margin: 'auto', width: '50%' }}>
-          <p
-            style={{
-              display: 'inline-block',
-              width: 'max-content',
-              margin: 'auto',
-              marginRight: '10px',
-            }}
-          >
-            Starting in{'      '}
-          </p>
-          <Countdown
-            renderer={({ seconds, completed }) => {
-              if (completed) {
-                setInput('');
-                setPrompt(String(Math.random()));
-                setRestart(false);
-              }
-              return (
-                <span style={{ display: 'inline-block' }}>:{seconds}</span>
-              );
-            }}
-            date={Date.now() + 5000}
-          ></Countdown>
+        <div style={{ marginLeft: '15%' }}>
+          <RaceTrack />
+          <div style={{ margin: 'auto', width: '50%', marginLeft: '0vw' }}>
+            <p
+              style={{
+                display: 'inline-block',
+                width: 'max-content',
+                margin: 'auto',
+                marginRight: '10px',
+              }}
+            >
+              Starting in{'      '}
+            </p>
+            <Countdown
+              renderer={({ seconds, completed }) => {
+                if (completed) {
+                  setInput('');
+                  setPrompt(
+                    prompts[Math.floor(Math.random() * prompts.length)]
+                  );
+                  setRestart(false);
+                  setTimeOut(false);
+                }
+                return (
+                  <span style={{ display: 'inline-block' }}>:{seconds}</span>
+                );
+              }}
+              date={Date.now() + startingTime * 1000}
+            ></Countdown>
+          </div>
         </div>
       </div>
     );
   }
+  // After finishing the game, there is a 3 second delay before going to the next level.
   if (redirect) {
     return <Redirect to={props.nextLevel} />;
-  } else if (input === prompt) {
+  }
+  // User beat the game
+  else if (input === prompt && !timeOut) {
     setTimeout(() => setRedirect(true), 3000);
     return (
       <div>
-        <p>Type Racing</p>
-        <RaceTrack />
-        <p>Nice typing ;)</p>
+        <p style={{ textAlign: 'center' }}>Type Racing</p>
+        <div style={{ marginLeft: '15%' }}>
+          <RaceTrack />
+          <p>Nice typing ;)</p>
+        </div>
       </div>
     );
-  } else {
+  }
+  // User started the game. Shows the new text prompt and starts the timer.
+  else {
     return (
       <div>
         <p style={{ textAlign: 'center' }}>Type Racing</p>
-        <RaceTrack setRestart={setRestart} />
-        <TextPrompt prompt={prompt} setPrompt={setPrompt} />
-        <form>
-          <label>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onPaste={(e) => e.preventDefault()}
-              placeholder="Type the text above before time runs out"
-              style={{ width: '75%', height: '3vw', fontSize: '20px' }}
-            />
-          </label>
-        </form>
+        <div style={{ marginLeft: '15%' }}>
+          <RaceTrack setRestart={setRestart} setTimeOut={setTimeOut} />
+          <TextPrompt prompt={prompt} setPrompt={setPrompt} />
+          <form>
+            <label>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onPaste={(e) => e.preventDefault()}
+                placeholder="Type the text above before time runs out"
+                style={{ width: '75%', height: '3vw', fontSize: '20px' }}
+              />
+            </label>
+          </form>
+        </div>
       </div>
     );
   }
