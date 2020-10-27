@@ -13,7 +13,7 @@ export const LEVELS: { [url: string]: JSX.Element } = {
 export const INITIAL_LEVEL = 'level1';
 
 interface LevelProps {
-  children: JSX.Element[];
+  children: JSX.Element | JSX.Element[];
   isCompleted: boolean;
   levelUrl: string;
   nextLevelUrl: string;
