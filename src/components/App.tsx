@@ -19,11 +19,11 @@ export default function App(): JSX.Element {
   useEffect(() => {
     _firebase.load(
       () => {
-        setIsSignedIn(true)
+        setIsSignedIn(true);
       },
       () => {
-        setIsSignedIn(false)
-      }
+        setIsSignedIn(false);
+      },
     );
   }, []);
 
@@ -57,7 +57,7 @@ export default function App(): JSX.Element {
                 exact
                 path={`/${levelUrl}`}
                 render={() => LEVELS[levelUrl]}
-              ></Route>
+              ></Route>,
             )
           }
         </Router>

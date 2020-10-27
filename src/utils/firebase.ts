@@ -50,9 +50,6 @@ export class _Firebase {
    */
   protected auth_user?: firebase.User;
 
-  public constructor() {
-  }
-
   /**
    * When component mounts, run the this function.
    *
@@ -67,11 +64,11 @@ export class _Firebase {
     firebase.auth(app).onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
         this.auth_user = user;
-        ((!this.user || Object.keys(this.user).length === 0)
+        void ((!this.user || Object.keys(this.user).length === 0)
           ? this.postUser()
           : this.getUser())
-          .then((user) => {
-            this.user = user;
+          .then((userData) => {
+            this.user = userData;
             success();
           });
       } else {

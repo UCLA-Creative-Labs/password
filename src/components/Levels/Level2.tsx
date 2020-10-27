@@ -5,7 +5,7 @@ import Level from '../Levels';
 export default function Level2(): JSX.Element {
   const [ isCompleted, setIsCompleted ] = useState(false);
 
-  const complete = (_: React.MouseEvent) => {
+  const complete = () => {
     setIsCompleted(true);
   };
 

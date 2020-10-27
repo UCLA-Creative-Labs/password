@@ -7,17 +7,17 @@ import Level2 from './Level2';
 
 // Add new levels here
 export const LEVELS: { [url: string]: JSX.Element } = {
-  'level1': <Level1 />,
-  'level2': <Level2 />
+  level1: <Level1 />,
+  level2: <Level2 />,
 };
-export const INITIAL_LEVEL: string = 'level1';
+export const INITIAL_LEVEL = 'level1';
 
 interface LevelProps {
   children: JSX.Element[];
   isCompleted: boolean;
   levelUrl: string;
   nextLevelUrl: string;
-};
+}
 
 export default function Level(props: LevelProps): JSX.Element {
   const user = useContext(FirebaseClassContext).user;
@@ -32,7 +32,7 @@ export default function Level(props: LevelProps): JSX.Element {
       </div>
     );
   } else if (props.isCompleted) {
-    return <Redirect to={`/${props.nextLevelUrl}`} />
+    return <Redirect to={`/${props.nextLevelUrl}`} />;
   }
 
   return (

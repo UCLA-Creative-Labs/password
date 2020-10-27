@@ -5,7 +5,7 @@ import './styles/Header.scss';
 function Header(): JSX.Element {
   const _firebase = useContext(FirebaseClassContext);
   const signOut = () => {
-    _firebase.signOut().then(() => {
+    void _firebase.signOut().then(() => {
       window.location.replace('/');
     });
   };
