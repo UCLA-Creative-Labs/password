@@ -1,25 +1,40 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { _Firebase } from '../utils/firebase';
 
 import './styles/App.scss';
 
 import Header from './Header';
+import Error from './404';
 import Home from './Home';
-import Level1 from './Level1';
-import Level2 from './Level2';
+import { LEVELS } from './Levels';
 
 export const FirebaseClassContext = createContext(new _Firebase());
 
 export default function App(): JSX.Element {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [_firebase] = useState<_Firebase>(new _Firebase());
+  const [isSignedIn, setIsSignedIn] = useState<boolean | undefined>(undefined);
+  const _firebase = useContext(FirebaseClassContext);
 
   useEffect(() => {
-    _firebase.load({ setIsSignedIn });
+    _firebase.load(
+      () => {
+        setIsSignedIn(true);
+      },
+      () => {
+        setIsSignedIn(false);
+      }
+    );
   }, []);
+
+  if (isSignedIn === undefined) {
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
 
   if (!isSignedIn) {
     return (
@@ -41,17 +56,18 @@ export default function App(): JSX.Element {
       <div className="app">
         <Header />
         <Router>
-          <Route exact path="/" render={Home} />
-          <Route
-            exact
-            path="/level1"
-            render={() => <Level1 name="level1" nextLevel="/level2" />}
-          ></Route>
-          <Route
-            exact
-            path="/level2"
-            render={() => <Level2 name="level2" nextLevel="/level3" />}
-          ></Route>
+          <Switch>
+            <Route exact path="/" render={Home} />
+            {Object.keys(LEVELS).map((levelUrl) => (
+              <Route
+                key={levelUrl}
+                exact
+                path={`/${levelUrl}`}
+                render={() => LEVELS[levelUrl]}
+              ></Route>
+            ))}
+            <Route render={Error} />
+          </Switch>
         </Router>
       </div>
     </FirebaseClassContext.Provider>
