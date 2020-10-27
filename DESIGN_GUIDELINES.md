@@ -98,6 +98,47 @@ export default function ComponentName(props: ComponentNameProps) {
 }
 ```
 
+### Creating a new Level
+
+Specifically when creating a level component, place it inside the `src/components/Levels/` directory.
+
+You only need to follow a couple of rules when making levels.
+First off, import the Level wrapper component like so:
+```typescript
+import Level from '../Levels';
+```
+
+You'll need to have your component's root be this component.
+That is, your component's `return` function should look like this:
+```typescript
+export default function LevelName(...) {
+  ...
+
+  return (
+    <Level
+      levelUrl={'<your level\'s relative URL path>'}
+      nextLevelUrl={'<the relative URL path for the next level>'}
+      isCompleted={<a boolean representing whether the user has completed your level>}
+    >
+    ... // Your level
+    </Level>
+  );
+}
+```
+(To clarify `levelUrl` and `nextLevelUrl`: if your level is at `<website url>/level1`, then the value of `levelUrl` will be `'level1'`).
+
+Then, add your level component to the `LEVELS` const in `src/components/Levels/index.tsx` like so:
+```typescript
+export const LEVELS: { [url: string]: JSX.Element } = {
+  ...
+  your levelUrl: <LevelName />,
+  ...
+};
+```
+
+And that's it!
+Everything else (including user authentication, level transitions, and routes) is handled automatically.
+
 ## Styling
 
 Styles for a component should be placed in `src/components/styles/`.

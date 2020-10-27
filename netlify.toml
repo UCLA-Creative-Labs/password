@@ -3,6 +3,6 @@
   command = 'node scripts/prebuild.js && yarn build'
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = '/*'
+  to = '/index.html'
   status = 200

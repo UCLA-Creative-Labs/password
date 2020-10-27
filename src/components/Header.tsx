@@ -5,8 +5,9 @@ import './styles/Header.scss';
 function Header(): JSX.Element {
   const _firebase = useContext(FirebaseClassContext);
   const signOut = () => {
-    _firebase.signOut();
-    _firebase.setIsSignedIn(false);
+    void _firebase.signOut().then(() => {
+      window.location.replace('/');
+    });
   };
   return (
     <div id='header'>
