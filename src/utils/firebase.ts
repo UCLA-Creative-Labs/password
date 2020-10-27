@@ -114,11 +114,11 @@ export class _Firebase {
    *
    * @param ternaryOp if the document doesnt exist, complete this operation
    */
-  protected retrieveDocument(ternaryOp: (...args: any[]) => any) {
+  protected retrieveDocument(ternaryOp?: (...args: any[]) => any) {
     if(!this.auth_user) return Promise.resolve(undefined);
     const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
     return document.get().then((doc) => {
-      return doc.exists ? doc.data() : ternaryOp();
+      return doc.exists ? doc.data() : ternaryOp && ternaryOp();
     });
   }
 
@@ -126,7 +126,7 @@ export class _Firebase {
    * GET operation for the user.
    */
   public getUser(): Promise<any> {
-    return this.retrieveDocument(() => {});
+    return this.retrieveDocument();
   }
 
   /**
@@ -149,7 +149,7 @@ export class _Firebase {
       email: updates.email ?? this.user?.email,
       level: updates.level ?? this.user?.level,
     };
-    return document.update(updatedUser).then(() => { this.user = updatedUser });
+    return document.update(updatedUser).then(() => { this.user = updatedUser; });
   }
 
   /**

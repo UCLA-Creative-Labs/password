@@ -25,19 +25,15 @@ export default function Level(props: LevelProps): JSX.Element {
   const context = useContext(FirebaseClassContext);
 
   useEffect(() => {
-    context.user
-  });
-
-  useEffect(() => {
     if (!props.isCompleted) return;
 
-    context.updateUser({ level: props.nextLevelUrl }).then(() => {
+    void context.updateUser({ level: props.nextLevelUrl }).then(() => {
       setIsCompleted(true);
     });
   }, [ props.isCompleted ]);
 
   if (isCompleted) {
-    return <Redirect to={`/${props.nextLevelUrl}`} />
+    return <Redirect to={`/${props.nextLevelUrl}`} />;
   } else if (!context.user) {
     return <Redirect to={'/'} />;
   } else if (context.user.level && context.user.level != props.levelUrl) {
