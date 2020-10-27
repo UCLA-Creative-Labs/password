@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { FirebaseClassContext } from '../App';
@@ -20,19 +20,33 @@ interface LevelProps {
 }
 
 export default function Level(props: LevelProps): JSX.Element {
-  const user = useContext(FirebaseClassContext).user;
+  const [ isCompleted, setIsCompleted ] = useState(false);
 
-  if (!user) {
+  const context = useContext(FirebaseClassContext);
+
+  useEffect(() => {
+    context.user
+  });
+
+  useEffect(() => {
+    if (!props.isCompleted) return;
+
+    context.updateUser({ level: props.nextLevelUrl }).then(() => {
+      setIsCompleted(true);
+    });
+  }, [ props.isCompleted ]);
+
+  if (isCompleted) {
+    return <Redirect to={`/${props.nextLevelUrl}`} />
+  } else if (!context.user) {
     return <Redirect to={'/'} />;
-  } else if (user.level && user.level != props.levelUrl) {
+  } else if (context.user.level && context.user.level != props.levelUrl) {
     return (
       <div>
         <h3>nah ah ah</h3>
-        <Link to={`/${user.level}`}>Go back whence you came</Link>
+        <Link to={`/${context.user.level}`}>Go back whence you came</Link>
       </div>
     );
-  } else if (props.isCompleted) {
-    return <Redirect to={`/${props.nextLevelUrl}`} />;
   }
 
   return (
