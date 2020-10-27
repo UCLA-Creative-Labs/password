@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { _Firebase } from '../utils/firebase';
 
 import './styles/App.scss';
 
 import Header from './Header';
+import Error from './404';
 import Home from './Home';
 import { LEVELS } from './Levels';
 
@@ -49,17 +50,20 @@ export default function App(): JSX.Element {
       <div className='app'>
         <Header/>
         <Router>
-          <Route exact path="/" render={Home} />
-          {
-            Object.keys(LEVELS).map(levelUrl =>
-              <Route
-                key={levelUrl}
-                exact
-                path={`/${levelUrl}`}
-                render={() => LEVELS[levelUrl]}
-              ></Route>,
-            )
-          }
+          <Switch>
+            <Route exact path='/' render={Home} />
+            {
+              Object.keys(LEVELS).map(levelUrl =>
+                <Route
+                  key={levelUrl}
+                  exact
+                  path={`/${levelUrl}`}
+                  render={() => LEVELS[levelUrl]}
+                ></Route>,
+              )
+            }
+            <Route render={Error} />
+          </Switch>
         </Router>
       </div>
     </FirebaseClassContext.Provider>
