@@ -9,7 +9,7 @@ import './styles/App.scss';
 import Header from './Header';
 import Home from './Home';
 import Level1 from './Level1';
-import Level2 from './Level2';
+import TypeRacerLevel from './TypeRacerLevel';
 
 export const FirebaseClassContext = createContext(new _Firebase());
 
@@ -50,7 +50,7 @@ export default function App(): JSX.Element {
           <Route
             exact
             path="/level2"
-            render={() => <Level2 name="level2" nextLevel="/level3" />}
+            render={() => <TypeRacerLevel name="level2" nextLevel="/level3" />}
           ></Route>
         </Router>
       </div>

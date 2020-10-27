@@ -1,8 +1,9 @@
 // Identical to level1 except function name and export.
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import Countdown from 'react-countdown';
+import { Redirect } from 'react-router-dom';
 import car from '../assets/typeracercar.jpg';
+import './styles/TypeRacerLevel.scss';
 
 const prompts = [
   'All my life, my parents have told me not to open the basement door, but I got curious and disobeyed them...What is that glowing ball in the sky and why does it hurt my eyes?',
@@ -14,7 +15,7 @@ const prompts = [
   "They say we have a primal sense, that we can just feel when someone is watching us. It's been a few weeks, and it's clear that you do not have that sense.",
 ];
 
-const typingTime = 5;
+const typingTime = 10;
 const startingTime = 3;
 interface LevelProps {
   name: string;
@@ -29,16 +30,8 @@ interface RaceTrackProps {
 // Renders the car and timer. When timer runs out, it prompts user to restart
 const RaceTrack = React.memo(({ setRestart, setTimeOut }: RaceTrackProps) => {
   return (
-    <div id="RaceTrack" style={{ width: '75%' }}>
-      <img
-        src={car}
-        style={{
-          width: '80px',
-          height: '35px',
-          border: '0',
-          display: 'inline-block',
-        }}
-      ></img>
+    <div style={{ width: '75%' }}>
+      <img src={car} className="carImage"></img>
       {setRestart && (
         <Countdown
           renderer={({ seconds, completed }) => {
@@ -46,21 +39,10 @@ const RaceTrack = React.memo(({ setRestart, setTimeOut }: RaceTrackProps) => {
               if (setTimeOut) setTimeOut(true);
               return (
                 <span style={{ position: 'absolute', width: '100%' }}>
-                  <p
-                    style={{
-                      textAlign: 'center',
-                      margin: '2px',
-                      width: '50%',
-                      color: '#3B5998',
-                    }}
-                  >
+                  <p className="restartPrompt">
                     Too slow...
                     <button
-                      style={{
-                        borderRadius: '10px',
-                        fontSize: '24px',
-                        verticalAlign: 'middle',
-                      }}
+                      className="restartButton"
                       onClick={() => {
                         setRestart(true);
                       }}
@@ -71,24 +53,16 @@ const RaceTrack = React.memo(({ setRestart, setTimeOut }: RaceTrackProps) => {
                 </span>
               );
             }
-            return (
-              <span
-                style={{ right: '25%', position: 'absolute', color: 'red' }}
-              >
-                :{seconds}
-              </span>
-            );
+            return <span className="typingTimer">:{seconds}</span>;
           }}
           date={Date.now() + typingTime * 1000}
         ></Countdown>
       )}
-      <hr
-        style={{ borderTop: 'dashed 2px', color: '#FFA500', marginTop: '2px' }}
-      />
+      <hr className="raceTrackLine" />
     </div>
   );
 });
-
+RaceTrack.displayName = 'Race Track';
 // The text prompt. The user can change this ;)
 interface PromptProps {
   prompt: string;
@@ -101,25 +75,18 @@ function TextPrompt({ prompt, setPrompt }: PromptProps): JSX.Element {
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          style={{
-            fontFamily: 'Arial,serif',
-            fontSize: '20px',
-            border: 'none',
-            outline: 'none',
-            width: '75%',
-          }}
+          className="textPrompt"
         />
       </form>
     </div>
   );
 }
 
-function Level2(props: LevelProps): JSX.Element {
+function TypeRacerLevel(props: LevelProps): JSX.Element {
   const [redirect, setRedirect] = useState(false);
   const [input, setInput] = useState('');
-  const [prompt, setPrompt] = useState(
-    prompts[Math.floor(Math.random() * prompts.length)]
-  );
+  const p = prompts[Math.floor(Math.random() * prompts.length)]; // Triggered weird comma dangle error
+  const [prompt, setPrompt] = useState(p);
   const [restart, setRestart] = useState(true);
   const [timeOut, setTimeOut] = useState(true);
   // True at the first load up and when user clicks restart button after losing
@@ -127,32 +94,21 @@ function Level2(props: LevelProps): JSX.Element {
     return (
       <div>
         <p style={{ textAlign: 'center' }}>Type Racing</p>
-        <div style={{ marginLeft: '15%' }}>
+        <div className="raceTrackContainer">
           <RaceTrack />
-          <div style={{ margin: 'auto', width: '50%', marginLeft: '0vw' }}>
-            <p
-              style={{
-                display: 'inline-block',
-                width: 'max-content',
-                margin: 'auto',
-                marginRight: '10px',
-              }}
-            >
-              Starting in{'      '}
-            </p>
+          <div>
+            <p className="restartContainer">Starting in{'      '}</p>
             <Countdown
               renderer={({ seconds, completed }) => {
                 if (completed) {
+                  const p2 =
+                    prompts[Math.floor(Math.random() * prompts.length)];
                   setInput('');
-                  setPrompt(
-                    prompts[Math.floor(Math.random() * prompts.length)]
-                  );
+                  setPrompt(p2);
                   setRestart(false);
                   setTimeOut(false);
                 }
-                return (
-                  <span style={{ display: 'inline-block' }}>:{seconds}</span>
-                );
+                return <span className="restartTimer">:{seconds}</span>;
               }}
               date={Date.now() + startingTime * 1000}
             ></Countdown>
@@ -171,7 +127,7 @@ function Level2(props: LevelProps): JSX.Element {
     return (
       <div>
         <p style={{ textAlign: 'center' }}>Type Racing</p>
-        <div style={{ marginLeft: '15%' }}>
+        <div className="raceTrackContainer">
           <RaceTrack />
           <p>Nice typing ;)</p>
         </div>
@@ -183,7 +139,7 @@ function Level2(props: LevelProps): JSX.Element {
     return (
       <div>
         <p style={{ textAlign: 'center' }}>Type Racing</p>
-        <div style={{ marginLeft: '15%' }}>
+        <div className="raceTrackContainer">
           <RaceTrack setRestart={setRestart} setTimeOut={setTimeOut} />
           <TextPrompt prompt={prompt} setPrompt={setPrompt} />
           <form>
@@ -194,7 +150,7 @@ function Level2(props: LevelProps): JSX.Element {
                 onChange={(e) => setInput(e.target.value)}
                 onPaste={(e) => e.preventDefault()}
                 placeholder="Type the text above before time runs out"
-                style={{ width: '75%', height: '3vw', fontSize: '20px' }}
+                className="inputLine"
               />
             </label>
           </form>
@@ -204,4 +160,4 @@ function Level2(props: LevelProps): JSX.Element {
   }
 }
 
-export default Level2;
+export default TypeRacerLevel;
