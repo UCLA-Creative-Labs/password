@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import Countdown from 'react-countdown';
 import { Redirect } from 'react-router-dom';
-import car from '../assets/typeracercar.jpg';
-import './styles/TypeRacerLevel.scss';
+import car from '../../assets/typeracercar.jpg';
+import '../styles/TypeRacerLevel.scss';
+import Level from '../Levels';
 
 const prompts = [
   'All my life, my parents have told me not to open the basement door, but I got curious and disobeyed them...What is that glowing ball in the sky and why does it hurt my eyes?',
@@ -20,6 +21,8 @@ const startingTime = 3;
 interface LevelProps {
   name: string;
   nextLevel: string;
+  setRedirect: React.Dispatch<React.SetStateAction<boolean>>;
+  redirect: boolean;
 }
 
 interface RaceTrackProps {
@@ -82,8 +85,22 @@ function TextPrompt({ prompt, setPrompt }: PromptProps): JSX.Element {
   );
 }
 
-function TypeRacerLevel(props: LevelProps): JSX.Element {
+function TypeRacerLevelWrapper(): JSX.Element {
   const [redirect, setRedirect] = useState(false);
+  const level = 'typeracer';
+  const nextLevel = 'level4';
+  return (
+    <Level isCompleted={redirect} levelUrl={level} nextLevelUrl={nextLevel}>
+      <TypeRacerLevel
+        redirect={redirect}
+        setRedirect={setRedirect}
+        name={level}
+        nextLevel={nextLevel}
+      />
+    </Level>
+  );
+}
+function TypeRacerLevel(props: LevelProps): JSX.Element {
   const [input, setInput] = useState('');
   const p = prompts[Math.floor(Math.random() * prompts.length)]; // Triggered weird comma dangle error
   const [prompt, setPrompt] = useState(p);
@@ -118,12 +135,12 @@ function TypeRacerLevel(props: LevelProps): JSX.Element {
     );
   }
   // After finishing the game, there is a 3 second delay before going to the next level.
-  if (redirect) {
+  if (props.redirect) {
     return <Redirect to={props.nextLevel} />;
   }
   // User beat the game
   else if (input === prompt && !timeOut) {
-    setTimeout(() => setRedirect(true), 3000);
+    setTimeout(() => props.setRedirect(true), 3000);
     return (
       <div>
         <p style={{ textAlign: 'center' }}>Type Racing</p>
@@ -160,4 +177,4 @@ function TypeRacerLevel(props: LevelProps): JSX.Element {
   }
 }
 
-export default TypeRacerLevel;
+export default TypeRacerLevelWrapper;

@@ -4,11 +4,13 @@ import { Link, Redirect } from 'react-router-dom';
 import { FirebaseClassContext } from '../App';
 import Level1 from './Level1';
 import Level2 from './Level2';
+import TypeRacerLevelWrapper from './TypeRacerLevel';
 
 // Add new levels here
 export const LEVELS: { [url: string]: JSX.Element } = {
   level1: <Level1 />,
   level2: <Level2 />,
+  typeracer: <TypeRacerLevelWrapper />,
 };
 export const INITIAL_LEVEL = 'level1';
 
@@ -35,9 +37,5 @@ export default function Level(props: LevelProps): JSX.Element {
     return <Redirect to={`/${props.nextLevelUrl}`} />;
   }
 
-  return (
-    <div>
-      {props.children}
-    </div>
-  );
+  return <div>{props.children}</div>;
 }
