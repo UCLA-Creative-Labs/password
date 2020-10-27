@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { FirebaseClassContext } from '../App';
@@ -21,10 +21,6 @@ interface LevelProps {
 
 export default function Level(props: LevelProps): JSX.Element {
   const user = useContext(FirebaseClassContext).user;
-
-  useEffect(() => {
-    console.log(user);
-  }, [ user ]);
 
   if (!user) {
     return <Redirect to={'/'} />;

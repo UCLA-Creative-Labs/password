@@ -40,10 +40,6 @@ export interface _FirebaseProps {
  */
 export class _Firebase {
   /**
-   * the sign in hook
-   */
-  public setIsSignedIn: (b: boolean) => void;
-  /**
    * user info will be stored here
    */
   public user?: UserInfo;
@@ -54,8 +50,7 @@ export class _Firebase {
    */
   protected auth_user?: firebase.User;
 
-  public constructor(){
-    this.setIsSignedIn = (b) => {b;};
+  public constructor() {
   }
 
   /**
@@ -67,18 +62,20 @@ export class _Firebase {
    *
    * @param props the properties to for load
    */
-  public load(props: _FirebaseProps): void  {
-    this.setIsSignedIn = props.setIsSignedIn;
-    this.user = {};
-
+  public load(success: (...args: any[]) => any, fail: (...args: any[]) => any) {
     void firebase.auth(app).setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth(app).onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
-        this.setIsSignedIn(true);
         this.auth_user = user;
-        if (this.user && Object.keys(this.user).length === 0){
-          void this.postUser();
-        }
+        ((!this.user || Object.keys(this.user).length === 0)
+          ? this.postUser()
+          : this.getUser())
+          .then((user) => {
+            this.user = user;
+            success();
+          });
+      } else {
+        fail();
       }
     });
   }
@@ -95,7 +92,6 @@ export class _Firebase {
       ],
       callbacks: {
         signInSuccessWithAuthResult: () => {
-          this.setIsSignedIn(true);
           return false;
         },
       },
@@ -112,8 +108,8 @@ export class _Firebase {
   /**
    * Sign out and empty this.user
    */
-  public signOut(): void {
-    void firebase.auth(app).signOut().then(() => this.user = {});
+  public signOut(): Promise<any> {
+    return firebase.auth(app).signOut().then(() => this.user = {});
   }
 
   /**
@@ -122,7 +118,7 @@ export class _Firebase {
    * @param ternaryOp if the document doesnt exist, complete this operation
    */
   protected retrieveDocument(ternaryOp: any) {
-    if(!this.auth_user) return;
+    if(!this.auth_user) return Promise.resolve(undefined);
     const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
     return document.get().then((doc) => {
       return doc.exists ? doc.data() : ternaryOp;
@@ -132,14 +128,14 @@ export class _Firebase {
   /**
    * GET operation for the user.
    */
-  public getUser(): Promise<any> | undefined {
+  public getUser(): Promise<any> {
     return this.retrieveDocument({});
   }
 
   /**
    * POST operation for the user.
    */
-  public postUser(): Promise<any> | undefined {
+  public postUser(): Promise<any> {
     return this.retrieveDocument(this.putUser());
   }
 
@@ -148,8 +144,8 @@ export class _Firebase {
    *
    * @param updates the updated user object, defaults to this.user if not passed in
    */
-  public updateUser(updates: UserInfo): Promise<any> | undefined {
-    if(!this.auth_user) return;
+  public updateUser(updates: UserInfo): Promise<any> {
+    if(!this.auth_user) return Promise.resolve(undefined);
     const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
     const updatedUser: UserInfo = {
       name: updates.name ?? this.user?.name,
