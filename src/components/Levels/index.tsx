@@ -22,14 +22,17 @@ interface LevelProps {
 }
 
 export default function Level(props: LevelProps): JSX.Element {
-  const [ isCompleted, setIsCompleted ] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const context = useContext(FirebaseClassContext);
 
   const hasNotReachedLevel = (levelUrl: string): boolean => {
     const keys = Object.keys(LEVELS);
-    return !context.user || !context.user.level ||
-      keys.indexOf(context.user.level) < keys.indexOf(levelUrl);
+    return (
+      !context.user ||
+      !context.user.level ||
+      keys.indexOf(context.user.level) < keys.indexOf(levelUrl)
+    );
   };
 
   useEffect(() => {
@@ -42,7 +45,7 @@ export default function Level(props: LevelProps): JSX.Element {
     } else {
       setIsCompleted(true);
     }
-  }, [ props.isCompleted ]);
+  }, [props.isCompleted]);
 
   if (isCompleted) {
     return <Redirect to={`/${props.nextLevelUrl}`} />;
