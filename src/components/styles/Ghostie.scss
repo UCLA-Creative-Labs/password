@@ -9,11 +9,11 @@
 }
 
 #background.reg {
-  background-color: #FFFFFF;
+  background-color: #fff;
 }
 
 #background.incog {
-  background-color: #C9C9C9;
+  background-color: #c9c9c9;
 }
 
 #wrapper {
@@ -62,24 +62,27 @@ input {
 }
 
 input.reg {
-  border: 2px solid #000000;
+  border: 2px solid #000;
 }
 
 input.incog {
   border: 2px solid #696969;
 }
 
-input:focus, button:focus, textarea:focus, select:focus{
+input:focus,
+button:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
 #ghostieButton {
   position: relative;
-  bottom: -.75em;
+  bottom: -0.75em;
   margin-left: 1em;
   display: inline;
   background-color: transparent;
-  border: 0px;
+  border: 0;
 }
 
 #ghostieIcon {
@@ -88,6 +91,6 @@ input:focus, button:focus, textarea:focus, select:focus{
   background-image: url('../../assets/ghostie-submit.svg');
 }
 
-.disabled{
+.disabled {
   pointer-events: none;
 }

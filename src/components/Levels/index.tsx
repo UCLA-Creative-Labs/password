@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { FirebaseClassContext } from '../App';
+import Ghostie from './Ghostie';
 import Level1 from './Level1';
 import Level2 from './Level2';
-import Ghostie from './Ghostie';
 
 // Add new levels here
 export const LEVELS: { [url: string]: JSX.Element } = {

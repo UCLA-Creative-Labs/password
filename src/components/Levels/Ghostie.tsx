@@ -8,7 +8,6 @@ export default function Ghostie(): JSX.Element {
   const [ isIncognito, setIsIncognito ] = useState(false);
 
   const complete = () => {
-    console.log(isIncognito)
     if(isIncognito){
       setIsCompleted(true);
     }
@@ -16,10 +15,10 @@ export default function Ghostie(): JSX.Element {
 
   useEffect(() => {
     if ('storage' in navigator && 'estimate' in navigator.storage) {
-      navigator.storage.estimate().then(({usage, quota}) => {
+      void navigator.storage.estimate().then(({usage, quota}) => {
         if(quota && quota < 1200000000){
-              setIsIncognito(true);
-          }
+          setIsIncognito(true);
+        }
       });
     } else {
       setIsIncognito(true);
@@ -48,7 +47,7 @@ export default function Ghostie(): JSX.Element {
               </div>
               <div>
                 <button id='ghostieButton' className={isIncognito ? '' : 'disabled'} onClick={complete}>
-                    <div id='ghostieIcon'/>
+                  <div id='ghostieIcon'/>
                 </button>
               </div>
             </form>
