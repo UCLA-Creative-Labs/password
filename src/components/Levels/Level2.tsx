@@ -13,7 +13,7 @@ export default function Level2(): JSX.Element {
     <Level
       isCompleted={isCompleted}
       levelUrl={'level2'}
-      nextLevelUrl={'level1'}>
+      nextLevelUrl={'shhhh'}>
       <h1>Level2</h1>
       <p>Click <a onClick={complete}>here</a> to proceed to the next level.</p>
     </Level>

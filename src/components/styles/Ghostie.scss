@@ -1,0 +1,93 @@
+#background {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+#background.reg {
+  background-color: #FFFFFF;
+}
+
+#background.incog {
+  background-color: #C9C9C9;
+}
+
+#wrapper {
+  display: grid;
+  place-items: center;
+  height: auto;
+  width: 100vw;
+}
+
+#ghostie {
+  width: 292px;
+  height: 300px;
+}
+
+#ghostie.reg {
+  background-image: url('../../assets/ghostie-reg.svg');
+}
+
+#ghostie.incog {
+  background-image: url('../../assets/ghostie-incog.svg');
+}
+
+#fakeInput {
+  display: relative;
+  margin: 2em auto;
+  width: 75%;
+  height: 5vw;
+}
+
+#fakeInput #input {
+  width: 90%;
+}
+
+#fakeInput label {
+  display: block;
+}
+
+#fakeInput div {
+  display: inline-block;
+}
+
+input {
+  height: 100%;
+  width: 100%;
+  font-size: 30px;
+}
+
+input.reg {
+  border: 2px solid #000000;
+}
+
+input.incog {
+  border: 2px solid #696969;
+}
+
+input:focus, button:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+#ghostieButton {
+  position: relative;
+  bottom: -.75em;
+  margin-left: 1em;
+  display: inline;
+  background-color: transparent;
+  border: 0px;
+}
+
+#ghostieIcon {
+  width: 40px;
+  height: 40px;
+  background-image: url('../../assets/ghostie-submit.svg');
+}
+
+.disabled{
+  pointer-events: none;
+}

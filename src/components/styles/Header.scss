@@ -1,6 +1,7 @@
 @import 'variables';
 
 #header {
+  z-index: 999;
   display: flex;
   align-items: center;
   height: $header-height;
