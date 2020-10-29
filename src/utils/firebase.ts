@@ -118,7 +118,7 @@ export class _Firebase {
     if(!this.auth_user) return Promise.resolve(undefined);
     const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
     return document.get().then((doc) => {
-      return doc.exists ? doc.data() : ternaryOp && ternaryOp();
+      return doc.exists ? doc.data() : ternaryOp && ternaryOp(this.auth_user);
     });
   }
 
@@ -155,10 +155,10 @@ export class _Firebase {
   /**
    * PUT operation for the user.
    */
-  public putUser(): UserInfo {
-    if(!this.auth_user) return {};
-    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
-    const profile = this.auth_user.providerData[0];
+  public putUser(user: firebase.User): UserInfo {
+    if(!user && !this.auth_user) return {};
+    const document = firebase.firestore(app).collection('users').doc(user.uid ?? this.auth_user?.uid);
+    const profile = user.providerData[0];
 
     const deets: UserInfo = {
       name: profile?.displayName ?? 'Anonymous User',
