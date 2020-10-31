@@ -25,6 +25,7 @@ export default function Level(props: LevelProps): JSX.Element {
   const context = useContext(FirebaseClassContext);
 
   const hasNotReachedLevel = (levelUrl: string): boolean => {
+    if (context?.user?.level === 'admin') return false;
     const keys = Object.keys(LEVELS);
     return !context.user || !context.user.level ||
       keys.indexOf(context.user.level) < keys.indexOf(levelUrl);
