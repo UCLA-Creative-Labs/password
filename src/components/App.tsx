@@ -24,7 +24,7 @@ export default function App(): JSX.Element {
       },
       () => {
         setIsSignedIn(false);
-      }
+      },
     );
   }, []);
 
