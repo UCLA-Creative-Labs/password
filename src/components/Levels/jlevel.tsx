@@ -354,66 +354,6 @@ export default function JLevel(): JSX.Element {
   }
 
   return (
-
-      <div>
-        {RenderHall(hall)}
-        <button className='walkBtn' onClick={()=>{
-          const r = GetPlayerPos(board).r;
-          const c = GetPlayerPos(board).c;
-          if(CanMoveDir(board[r][c], dir)){
-            const b = MovePlayer(board, dir);
-            setHall(GetHall(b, dir));
-            setBoard(b);
-          }
-        }}>
-          Walk Forward
-        </button>
-        <button className='walkLeftBtn' onClick={()=>{
-          const r = GetPlayerPos(board).r;
-          const c = GetPlayerPos(board).c;
-          if(c == 5 && r == 1){
-            //setComplete(true);
-          }
-          const d = GetDir(dir, 'l');
-          if(CanMoveDir(board[r][c], d)){
-            const b = MoveGhost(MovePlayer(board, d));
-            setHall(GetHall(b, d));
-            setDir(d);
-            setBoard(b);
-          }
-        }}>
-          Walk Left
-        </button>
-        <button className='walkRightBtn' onClick={()=>{
-          const r = GetPlayerPos(board).r;
-          const c = GetPlayerPos(board).c;
-          if(c == 5 && r == 1){
-            //setComplete(true);
-          }
-          const d = GetDir(dir, 'r');
-          if(CanMoveDir(board[r][c], d)){
-            const b = MoveGhost(MovePlayer(board, d));
-            setHall(GetHall(b, d));
-            setDir(d);
-            setBoard(b);
-          }
-        }}>
-          Walk Right
-        </button>
-        <button className='turnAroundBtn' onClick={()=>{
-          const d = GetDir(dir, 'd');
-          setHall(GetHall(board, d));
-          setDir(d);
-        }}>
-          Turn Around
-        </button>
-      </div>
-
-  );
-
-
-/*
-  return (
     <Level
       isCompleted={isCompleted}
       levelUrl={'maze'}
@@ -474,5 +414,4 @@ export default function JLevel(): JSX.Element {
     </Level>
   );
 
-*/
 }
