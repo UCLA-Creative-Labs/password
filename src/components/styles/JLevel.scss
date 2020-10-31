@@ -1,8 +1,9 @@
 .imgCont {
-  position: absolute;  
+  position: absolute;
   top: 0;
   left: 0;
 }
+
 .back {
   position: relative;
   max-width: 100%;
@@ -10,6 +11,7 @@
   top: 0;
   left: 0;
 }
+
 .cont2 {
   position: absolute;
   top: 25%;
@@ -17,6 +19,7 @@
   width: 50%;
   height: 50%;
 }
+
 .leftImg {
   position: absolute;
   max-width: 100%;
@@ -24,6 +27,7 @@
   top: 0%;
   left: 0%;
 }
+
 .rightImg {
   position: absolute;
   max-width: 100%;
@@ -31,23 +35,26 @@
   top: 0%;
   left: 0%;
 }
+
 .walkBtn {
   position: absolute;
   top: 540px;
   left: 435px;
 }
+
 .walkLeftBtn {
   position: absolute;
   top: 540px;
-  left: 0px;
 }
+
 .walkRightBtn {
   position: absolute;
   top: 540px;
   left: 900px;
 }
+
 .turnAroundBtn {
-    position: absolute;
-    top: 560px;
-    left: 435px;
+  position: absolute;
+  top: 560px;
+  left: 435px;
 }
