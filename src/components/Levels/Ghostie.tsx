@@ -9,7 +9,7 @@ const inputTexts = [
   'Do you really want me to remember this?',
   'Somethings are better said in private...',
   'Okay my turn, I\'ll tell you something... wait no this is too public',
-  'Shhhh... they\re listening',
+  'Shhhh... they\'re listening',
   '🤫👻',
   'Ughh I\'m shy... let\'s do this in private',
   'I can feel them watching 👀',
