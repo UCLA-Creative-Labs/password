@@ -398,7 +398,7 @@ export default function JLevel(): JSX.Element {
           const r = GetPlayerPos(board).r;
           const c = GetPlayerPos(board).c;
           if(c == 5 && r == 1){
-            setComplete(true);
+            Win();
           }
           const d = GetDir(dir, 'r');
           if(CanMoveDir(board[r][c], d)){
@@ -412,6 +412,9 @@ export default function JLevel(): JSX.Element {
         </button>
         <button className='turnAroundBtn' onClick={()=>{
           const d = GetDir(dir, 'd');
+	  if(c == 5 && r == 1){
+            Win();
+          }
           setHall(GetHall(board, d));
           setDir(d);
         }}>
