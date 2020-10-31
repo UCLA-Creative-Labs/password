@@ -136,7 +136,9 @@ export default function JLevel(): JSX.Element {
   function GetHall(m, direction){
     let pr = 0;
     let pc = 0;
+    // tslint:disable-next-line
     let h = [];
+    h = [];
     const b = CopyMap(m);
 
     for(let i=0; i<b.length; i++){
@@ -221,8 +223,9 @@ export default function JLevel(): JSX.Element {
   function MovePlayer(m, dr){
     const pr = GetPlayerPos(m).r;
     const pc = GetPlayerPos(m).c;
+    // tslint:disable-next-line
     let b = CopyMap(m);
-
+    b = CopyMap(m);
     switch(dr){
       case 'l':
         if(b[pr][pc].left == 'h'){
@@ -327,9 +330,13 @@ export default function JLevel(): JSX.Element {
   }
 
   function CopyMap(m){
+  // tslint:disable-next-line
     let newMap = [];
+    newMap = [];
     for(let i = 0; i < m.length; i++){
+    // tslint:disable-next-line
       let row = [];
+      row = [];
       for(let j = 0; j < m[i].length; j++){
         row.push(CopySpace(m[i][j]));
       }
