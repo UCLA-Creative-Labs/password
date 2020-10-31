@@ -1,15 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import { randomElement } from '../../utils/Utils';
 
 import Level from '../Levels';
 import '../styles/Ghostie.scss';
 
+const inputTexts = [
+  'hmmmm... tell me a secret',
+  'Do you really want me to remember this?',
+  'Somethings are better said in private...',
+  'Okay my turn, I\'ll tell you something... wait no this is too public',
+  'Shhhh... they\re listening',
+  '🤫👻',
+  'Ughh I\'m shy... let\'s do this in private',
+  'I can feel them watching 👀',
+];
+
+const endText = 'this conversation never happened';
+
 export default function Ghostie(): JSX.Element {
   const [ isCompleted, setIsCompleted ] = useState(false);
   const [ isIncognito, setIsIncognito ] = useState(false);
+  const [ seen, setSeen ] = useState(false);
 
   const complete = () => {
     if(isIncognito){
-      setIsCompleted(true);
+      setTimeout(() => {
+        setIsCompleted(true);
+      }, 3000);
     }
   };
 
@@ -53,6 +70,10 @@ export default function Ghostie(): JSX.Element {
 
   useEffect(() => {
     detectPrivateMode();
+    setSeen(!!sessionStorage.getItem('ghostie'));
+    if(!seen) {
+      sessionStorage.setItem('ghostie', 'true');
+    }
   });
 
   return (
@@ -69,7 +90,10 @@ export default function Ghostie(): JSX.Element {
                 <label>
                   <input
                     type='text'
-                    placeholder='hmmmm... tell me a secret'
+                    placeholder= {
+                      isIncognito ? endText :
+                        !seen ? inputTexts[0] : randomElement(inputTexts)
+                    }
                     onPaste={(e) => e.preventDefault()}
                     className={isIncognito ? 'incog' : 'reg'}
                   />

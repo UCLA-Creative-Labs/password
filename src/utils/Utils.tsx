@@ -34,3 +34,12 @@ export const useInput = (initialValue: any) => {
     },
   };
 };
+
+/**
+ * Obtain a random element in an array
+ *
+ * @param arr an input array
+ */
+export function randomElement(arr: any[]): any {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
