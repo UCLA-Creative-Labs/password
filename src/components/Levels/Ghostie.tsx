@@ -24,9 +24,7 @@ export default function Ghostie(): JSX.Element {
 
   const complete = () => {
     if(isIncognito){
-      setTimeout(() => {
-        setIsCompleted(true);
-      }, 3000);
+      setIsCompleted(true);
     }
   };
 
