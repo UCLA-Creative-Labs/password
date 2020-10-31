@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Level from '../Levels';
-import './styles/JLevel.scss';
-import back from '../assets/JLevelAssets/back.png';
-import lhall from '../assets/JLevelAssets/halll.png';
-import rhall from '../assets/JLevelAssets/hallr.png';
-import ldoor from '../assets/JLevelAssets/doorl.png';
-import rdoor from '../assets/JLevelAssets/doorr.png';
-import fdoor from '../assets/JLevelAssets/doorf.png';
-import ghost from '../assets/JLevelAssets/ghost.png';
-import key from '../assets/JLevelAssets/key.png';
+import '../styles/JLevel.scss';
+import back from '../../assets/JLevelAssets/back.png';
+import lhall from '../../assets/JLevelAssets/halll.png';
+import rhall from '../../assets/JLevelAssets/hallr.png';
+import ldoor from '../../assets/JLevelAssets/doorl.png';
+import rdoor from '../../assets/JLevelAssets/doorr.png';
+import fdoor from '../../assets/JLevelAssets/doorf.png';
+import ghost from '../../assets/JLevelAssets/ghost.png';
+import key from '../../assets/JLevelAssets/key.png';
 
 interface Space {
   up: string;
