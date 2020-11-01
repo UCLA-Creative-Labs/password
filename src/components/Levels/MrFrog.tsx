@@ -33,7 +33,7 @@ export default function MrFrog(): JSX.Element {
       <h4 style={{ textAlign: 'center' }}>
         &quot;O great Cthulhu, I summon you!&quot;
       </h4>
-      <a href="https://discord.gg/2DHu2YSdDU" target="_blank">
+      <a href="https://discord.gg/2DHu2YSdDU" rel="noreferrer" target="_blank">
         <img
           src={transition ? cthulhu : summoningCircle}
           alt="cthulhu"
