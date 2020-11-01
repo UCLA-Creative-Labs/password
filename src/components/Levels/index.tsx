@@ -5,12 +5,14 @@ import { FirebaseClassContext } from '../App';
 import Level1 from './Level1';
 import Level2 from './Level2';
 import NoInternet from './NoInternet';
+import TypeRacerLevelWrapper from './TypeRacerLevel';
 
 // Add new levels here
 export const LEVELS: { [url: string]: JSX.Element } = {
   level1: <Level1 />,
   level2: <Level2 />,
   grid: <NoInternet />,
+  typeracer: <TypeRacerLevelWrapper />,
 };
 export const INITIAL_LEVEL = 'level1';
 
@@ -22,14 +24,18 @@ interface LevelProps {
 }
 
 export default function Level(props: LevelProps): JSX.Element {
-  const [ isCompleted, setIsCompleted ] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const context = useContext(FirebaseClassContext);
 
   const hasNotReachedLevel = (levelUrl: string): boolean => {
+    if (context?.user?.level === 'admin') return false;
     const keys = Object.keys(LEVELS);
-    return !context.user || !context.user.level ||
-      keys.indexOf(context.user.level) < keys.indexOf(levelUrl);
+    return (
+      !context.user ||
+      !context.user.level ||
+      keys.indexOf(context.user.level) < keys.indexOf(levelUrl)
+    );
   };
 
   useEffect(() => {
@@ -42,7 +48,7 @@ export default function Level(props: LevelProps): JSX.Element {
     } else {
       setIsCompleted(true);
     }
-  }, [ props.isCompleted ]);
+  }, [props.isCompleted]);
 
   if (isCompleted) {
     return <Redirect to={`/${props.nextLevelUrl}`} />;
@@ -57,9 +63,5 @@ export default function Level(props: LevelProps): JSX.Element {
     );
   }
 
-  return (
-    <div>
-      {props.children}
-    </div>
-  );
+  return <div>{props.children}</div>;
 }
