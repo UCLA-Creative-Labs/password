@@ -382,7 +382,7 @@ export default function JLevel(): JSX.Element {
           const r = GetPlayerPos(board).r;
           const c = GetPlayerPos(board).c;
           if(c == 5 && r == 1){
-            setComplete(true);
+	    Win();
           }
           const d = GetDir(dir, 'l');
           if(CanMoveDir(board[r][c], d)){
@@ -398,7 +398,7 @@ export default function JLevel(): JSX.Element {
           const r = GetPlayerPos(board).r;
           const c = GetPlayerPos(board).c;
           if(c == 5 && r == 1){
-            setComplete(true);
+            Win();
           }
           const d = GetDir(dir, 'r');
           if(CanMoveDir(board[r][c], d)){
