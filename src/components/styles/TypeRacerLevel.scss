@@ -1,0 +1,60 @@
+.raceTrackContainer {
+  margin-left: 15%;
+}
+
+.restartPrompt {
+  text-align: center;
+  margin: 2px;
+  width: 50%;
+  color: #3b5998;
+}
+
+.restartButton {
+  border-radius: 10px;
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+.typingTimer {
+  right: 25%;
+  position: absolute;
+  color: red;
+}
+
+.raceTrackLine {
+  border-top: dashed 2px;
+  color: #ffa500;
+  margin-top: 2px;
+}
+
+.textPrompt {
+  font-family: Arial, serif;
+  font-size: 23px;
+  border: none;
+  outline: none;
+  width: 75%;
+}
+
+.carImage {
+  width: 80px;
+  height: 35px;
+  border: 0;
+  display: inline-block;
+}
+
+.restartContainer {
+  display: inline-block;
+  width: max-content;
+  margin: auto;
+  margin-right: 10px;
+}
+
+.inputLine {
+  width: 75%;
+  height: 3vw;
+  font-size: 20px;
+}
+
+.restartTimer {
+  display: inline-block;
+}

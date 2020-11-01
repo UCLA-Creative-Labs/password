@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js --host=0.0.0.0",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "lint": "npx eslint '**/*.tsx' '**/*.ts' && npx stylelint '**/*.css' '**/*.scss'",
     "no-lock": "./scripts/noPackageLock.sh"
@@ -17,6 +17,7 @@
     "eslint-plugin-react": "^7.20.5",
     "firebase": "^7.24.0",
     "react": "^16.13.1",
+    "react-countdown": "^2.3.1",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.2.0"
