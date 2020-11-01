@@ -96,7 +96,6 @@ export default function Ghostie(): JSX.Element {
                   <input
                     type='text'
                     placeholder= {input}
-                    
                     onPaste={(e) => e.preventDefault()}
                     className={isIncognito ? 'incog' : 'reg'}
                   />
