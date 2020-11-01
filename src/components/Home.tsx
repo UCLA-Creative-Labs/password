@@ -10,7 +10,7 @@ function Home(): JSX.Element {
           Welcome to BigSpook!
         </div>
         <div id='text'>
-          A game created by <a target="_blank" href='https://creativelabsucla.com/'>
+          A game created by <a target="_blank" rel="noreferrer" href='https://creativelabsucla.com/'>
             Creative Labs
           </a>
         </div>
