@@ -13,7 +13,7 @@ export default function MrFrog(): JSX.Element {
 
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
     if (password == 'frogalicious') {
       setTransition(true);
@@ -26,10 +26,12 @@ export default function MrFrog(): JSX.Element {
   return (
     <Level
       isCompleted={isCompleted}
-      levelUrl={'level2'}
-      nextLevelUrl={'level1'}
+      levelUrl={'thegreatone'}
+      nextLevelUrl={'typeracer'}
     >
-      <h4 style={{ textAlign: 'center' }}>"O great Cthulhu, I summon you!"</h4>
+      <h4 style={{ textAlign: 'center' }}>
+        &quot;O great Cthulhu, I summon you!&quot;
+      </h4>
       <a href="https://discord.gg/2DHu2YSdDU">
         <img
           src={transition ? cthulhu : summoningCircle}
@@ -66,9 +68,7 @@ export default function MrFrog(): JSX.Element {
             }}
           />
         </form>
-        <p style={{ fontSize: '2vw' }}>
-          Hint: Call for me in the Bplate salmon line
-        </p>
+        <p style={{ fontSize: '2vw' }}>Hint: Call for me in the 227th cavern</p>
       </div>
     </Level>
   );

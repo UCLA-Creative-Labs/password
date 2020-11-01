@@ -5,11 +5,14 @@ import { FirebaseClassContext } from '../App';
 import Level1 from './Level1';
 import Level2 from './Level2';
 import MrFrog from './MrFrog';
+import TypeRacerLevelWrapper from './TypeRacerLevel';
+
 // Add new levels here
 export const LEVELS: { [url: string]: JSX.Element } = {
   level1: <Level1 />,
   level2: <Level2 />,
   thegreatone: <MrFrog />,
+  typeracer: <TypeRacerLevelWrapper />,
 };
 export const INITIAL_LEVEL = 'level1';
 
