@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-import Level from '../Levels';
 import cthulhu from '../../assets/cthulhu.png';
 import summon from '../../assets/summon.png';
 import summoningCircle from '../../assets/summoningCircle.png';
+import Level from '../Levels';
+
 export default function MrFrog(): JSX.Element {
   const [isCompleted, setIsCompleted] = useState(false);
   const [transition, setTransition] = useState(false);
