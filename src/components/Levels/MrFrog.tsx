@@ -28,7 +28,7 @@ export default function MrFrog(): JSX.Element {
     <Level
       isCompleted={isCompleted}
       levelUrl={'thegreatone'}
-      nextLevelUrl={'typeracer'}
+      nextLevelUrl={'maze'}
     >
       <h4 style={{ textAlign: 'center' }}>
         &quot;O great Cthulhu, I summon you!&quot;
@@ -65,6 +65,7 @@ export default function MrFrog(): JSX.Element {
               width: '30px',
               height: '30px',
               bottom: '0px',
+              right: '-35px',
               position: 'absolute',
             }}
           />

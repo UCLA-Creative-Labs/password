@@ -2,19 +2,21 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { FirebaseClassContext } from '../App';
+import Ghostie from './Ghostie';
 import Level1 from './Level1';
 import Level2 from './Level2';
 import MrFrog from './MrFrog';
+import JLevel from './jlevel';
 import TypeRacerLevelWrapper from './TypeRacerLevel';
 
 // Add new levels here
 export const LEVELS: { [url: string]: JSX.Element } = {
-  level1: <Level1 />,
-  level2: <Level2 />,
-  thegreatone: <MrFrog />,
+  shhhh: <Ghostie />,
   typeracer: <TypeRacerLevelWrapper />,
+  thegreatone: <MrFrog />,
+  maze: <JLevel />,
 };
-export const INITIAL_LEVEL = 'level1';
+export const INITIAL_LEVEL = 'shhhh';
 
 interface LevelProps {
   children: JSX.Element | JSX.Element[];
