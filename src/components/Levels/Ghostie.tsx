@@ -13,6 +13,7 @@ const inputTexts = [
   '🤫👻',
   'Ughh I\'m shy... let\'s do this in private',
   'I can feel them watching 👀',
+  'Make sure no one knows you visited this page 😉',
 ];
 
 const endText = 'this conversation never happened';
@@ -20,7 +21,7 @@ const endText = 'this conversation never happened';
 export default function Ghostie(): JSX.Element {
   const [ isCompleted, setIsCompleted ] = useState(false);
   const [ isIncognito, setIsIncognito ] = useState(false);
-  const [ seen, setSeen ] = useState(false);
+  const [ seen, setSeen ] = useState<string | null>();
 
   const complete = () => {
     if(isIncognito){
@@ -68,11 +69,15 @@ export default function Ghostie(): JSX.Element {
 
   useEffect(() => {
     detectPrivateMode();
-    setSeen(!!sessionStorage.getItem('ghostie'));
-    if(!seen) {
-      sessionStorage.setItem('ghostie', 'true');
+    const storage = sessionStorage.getItem('ghostie');
+    setSeen(storage);
+    if(!storage) {
+      sessionStorage.setItem('ghostie', inputTexts[0]);
     }
   });
+
+  const input = isIncognito ? endText :
+    !seen ? inputTexts[0] : randomElement(inputTexts, seen);
 
   return (
     <Level
@@ -83,15 +88,15 @@ export default function Ghostie(): JSX.Element {
         <div id='wrapper'>
           <div id='ghostie' className={isIncognito ? 'incog' : 'reg'}/>
           <div id='fakeInput'>
-            <form>
+            <form
+              onSubmit={(e) => { sessionStorage.setItem('ghostie', input); } }
+            >
               <div id='input' >
                 <label>
                   <input
                     type='text'
-                    placeholder= {
-                      isIncognito ? endText :
-                        !seen ? inputTexts[0] : randomElement(inputTexts)
-                    }
+                    placeholder= {input}
+                    
                     onPaste={(e) => e.preventDefault()}
                     className={isIncognito ? 'incog' : 'reg'}
                   />

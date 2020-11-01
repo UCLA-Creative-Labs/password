@@ -40,6 +40,9 @@ export const useInput = (initialValue: any) => {
  *
  * @param arr an input array
  */
-export function randomElement(arr: any[]): any {
+export function randomElement(arr: any[], ...avoid: any[]): any {
+  if(avoid.length !== 0) {
+    arr = arr.filter(v => !avoid.includes(v));
+  }
   return arr[Math.floor(Math.random() * arr.length)];
 }
