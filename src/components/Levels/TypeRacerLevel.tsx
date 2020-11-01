@@ -88,7 +88,7 @@ function TextPrompt({ prompt, setPrompt }: PromptProps): JSX.Element {
 function TypeRacerLevelWrapper(): JSX.Element {
   const [redirect, setRedirect] = useState(false);
   const level = 'typeracer';
-  const nextLevel = 'level4';
+  const nextLevel = 'maze';
   return (
     <Level isCompleted={redirect} levelUrl={level} nextLevelUrl={nextLevel}>
       <TypeRacerLevel
