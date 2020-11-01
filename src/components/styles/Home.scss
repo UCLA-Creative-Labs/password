@@ -38,7 +38,7 @@ a {
   color: #000;
   position: relative;
   text-decoration: none;
-  transition: font-weight .4s cubic-bezier(0,.5,0,1);
+  transition: font-weight 0.4s cubic-bezier(0, 0.5, 0, 1);
 }
 
 a:hover {
@@ -47,17 +47,17 @@ a:hover {
   text-decoration: none;
 }
 
-a:hover:after {
-  right: 0;
-}
-
-a:after {
+a::after {
   border-radius: 1em;
-  border-top: .1em solid;
+  border-top: 0.1em solid;
   content: "";
   position: absolute;
   right: 100%;
-  bottom: .05em;
+  bottom: 0.05em;
   left: 0;
-  transition: right .4s cubic-bezier(0,.5,0,1);
+  transition: right 0.4s cubic-bezier(0, 0.5, 0, 1);
+}
+
+a:hover::after {
+  right: 0;
 }
