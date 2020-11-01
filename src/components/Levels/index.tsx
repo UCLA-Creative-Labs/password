@@ -5,6 +5,7 @@ import { FirebaseClassContext } from '../App';
 import Ghostie from './Ghostie';
 import Level1 from './Level1';
 import Level2 from './Level2';
+import MrFrog from './MrFrog';
 import JLevel from './jlevel';
 import TypeRacerLevelWrapper from './TypeRacerLevel';
 
@@ -12,6 +13,7 @@ import TypeRacerLevelWrapper from './TypeRacerLevel';
 export const LEVELS: { [url: string]: JSX.Element } = {
   shhhh: <Ghostie />,
   typeracer: <TypeRacerLevelWrapper />,
+  thegreatone: <MrFrog />,
   maze: <JLevel />,
 };
 export const INITIAL_LEVEL = 'shhhh';
