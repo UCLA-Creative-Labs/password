@@ -4,7 +4,7 @@
 [![Mergify Status][mergify-status]][mergify]
 
 [mergify]: https://mergify.io
-[mergify-status]: https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/UCLA-Creative-Labs/bigspook&style=flat
+[mergify-status]: https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/UCLA-Creative-Labs/spooknt&style=flat
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md). By participating, you are 
 expected to uphold this code. Please report unacceptable behavior to uclacreatives@gmail.com.
