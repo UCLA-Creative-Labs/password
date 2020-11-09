@@ -30,7 +30,7 @@ export default function App(): JSX.Element {
 
   if (isSignedIn === undefined) {
     return (
-      <div>
+      <div id='loading'>
         <h1>Loading...</h1>
       </div>
     );

@@ -1,12 +1,10 @@
-# Creative Labs Website
+# Spookn't
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5cefdb30-4f2d-44d7-96ec-e9cf2fcdb961/deploy-status)](https://app.netlify.com/sites/creative-labs-new-website/deploys)
 [![Mergify Status][mergify-status]][mergify]
 
 [mergify]: https://mergify.io
 [mergify-status]: https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/UCLA-Creative-Labs/bigspook&style=flat
-
-A place full of cool stuff, things, and peeps. `bigspook` is the tech behind our website: where the funkiest stuff in design and tech happen!
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md). By participating, you are 
 expected to uphold this code. Please report unacceptable behavior to uclacreatives@gmail.com.
@@ -18,17 +16,17 @@ We use [`yarn`](https://classic.yarnpkg.com/en/docs/install#mac-stable) as our p
 The basic commands to get this repository and start are:
 
 ```
-$ git clone https://github.com/UCLA-Creative-Labs/bigspook.git
-$ cd bigspook
+$ git clone https://github.com/UCLA-Creative-Labs/spooknt.git
+$ cd spooknt
 $ yarn install
 $ yarn start
 ```
 
-If you run into an issue, feel free to make an issue [here](https://github.com/UCLA-Creative-Labs/bigspook/issues). If you have a fix, even better! Check out the follow section to learn how to contribute!
+If you run into an issue, feel free to make an issue [here](https://github.com/UCLA-Creative-Labs/spooknt/issues). If you have a fix, even better! Check out the follow section to learn how to contribute!
 
 ## Contributing
 
-Thanks for your interest in contributing to `bigspook`! ❤️
+Thanks for your interest in contributing to `Spookn't`! ❤️
 
 Here's a quick guide on how to get started.
 
@@ -36,7 +34,7 @@ Here's a quick guide on how to get started.
 2. Create an issue and/or mark an existing one to let everyone know that you are working your magic ⚡️
 3. Beep boop away!
 4. **Before you push**, it's always a good idea to check that your changes follow our linter rules! Run `yarn lint` at the root directory and watch it judge your code. 
-5. Stage, commit, and push your changes to make a [pull request](https://github.com/UCLA-Creative-Labs/bigspook/pulls)!
+5. Stage, commit, and push your changes to make a [pull request](https://github.com/UCLA-Creative-Labs/spooknt/pulls)!
 6. A maintainer will review your code and if it passes all the checks, your contribution will be merged on to `main` 🥳
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [DESIGN_GUIDELINES.md](DESIGN_GUIDELINES.md) for more info.
