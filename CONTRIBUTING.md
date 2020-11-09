@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-Thanks for your interest in contributing to bigspook! ❤️
+Thanks for your interest in contributing to Spookn't! ❤️
 
 These guidelines describe how to set up your environment and submit your own contributions! Please read it 
 carefully and, if there is anything that isn't up-to-date, feel free to submit a PR with your corrections 🙃
@@ -27,8 +27,8 @@ We use [`yarn`](https://classic.yarnpkg.com/en/docs/install#mac-stable) as our p
 The basic commands to get this repository and start are:
 
 ```
-$ git clone https://github.com/UCLA-Creative-Labs/bigspook.git
-$ cd bigspook
+$ git clone https://github.com/UCLA-Creative-Labs/spooknt.git
+$ cd spooknt
 $ yarn install
 ```
 
@@ -114,7 +114,7 @@ We have a pipeline to ensure that our production code will always build.
 
 ## Tools
 
-We recommend using Visual Studio Code to work on `bigspook`. Be sure to install the [eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) as we have strict linting rules that will prevent your code from merging. The combination of VSCode and this extension will allow you to automatically fix linter issues with a `Ctrl-` when hovering linter issues.
+We recommend using Visual Studio Code to work on `spooknt`. Be sure to install the [eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) as we have strict linting rules that will prevent your code from merging. The combination of VSCode and this extension will allow you to automatically fix linter issues with a `Ctrl-` when hovering linter issues.
 
 We use both [ESLint](https://eslint.org/) and [StyleLint](https://stylelint.io/) for two different functions that will be explained below.
 
@@ -140,7 +140,7 @@ See our [`.stylelintrc.json`](.stylelintrc.json) file for more info.
 
 ## Pipeline
 
-`Bigspook` is configured to use a pipeline to merge changes to `master`. Humans aren't perfect, so we abstracted all our merging to a pipeline managed by a bot, [Mergify](https://mergify.io/). 
+`Spookn't` is configured to use a pipeline to merge changes to `master`. Humans aren't perfect, so we abstracted all our merging to a pipeline managed by a bot, [Mergify](https://mergify.io/). 
 
 ### Mergify
 

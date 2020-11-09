@@ -7,7 +7,7 @@ function Home(): JSX.Element {
     <div id='homeWrapper'>
       <div id="wrapper">
         <div id='title'>
-          Welcome to BigSpook!
+          Welcome to Spookn't!
         </div>
         <div id='text'>
           A game created by <a target="_blank" rel="noreferrer" href='https://creativelabsucla.com/'>
