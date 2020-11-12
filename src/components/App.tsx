@@ -6,8 +6,8 @@ import { _Firebase } from '../utils/firebase';
 
 import './styles/App.scss';
 
-import Header from './Header';
 import Error from './404';
+import Header from './Header';
 import Home from './Home';
 import { LEVELS } from './Levels';
 
@@ -30,7 +30,7 @@ export default function App(): JSX.Element {
 
   if (isSignedIn === undefined) {
     return (
-      <div>
+      <div id='loading'>
         <h1>Loading...</h1>
       </div>
     );
