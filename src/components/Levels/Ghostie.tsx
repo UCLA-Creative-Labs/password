@@ -25,7 +25,6 @@ export default function Ghostie(): JSX.Element {
 
   const complete = () => {
     if(isIncognito){
-      console.log(isCompleted)
       setIsCompleted(true);
     }
   };
@@ -80,7 +79,7 @@ export default function Ghostie(): JSX.Element {
   const refresh = () => {
     if (!isIncognito)
       location.reload();
-  }
+  };
 
   const input = isIncognito ? endText :
     !seen ? inputTexts[0] : randomElement(inputTexts, seen);
