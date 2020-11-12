@@ -25,6 +25,7 @@ export default function Ghostie(): JSX.Element {
 
   const complete = () => {
     if(isIncognito){
+      console.log(isCompleted)
       setIsCompleted(true);
     }
   };
@@ -76,6 +77,11 @@ export default function Ghostie(): JSX.Element {
     }
   });
 
+  const refresh = () => {
+    if (!isIncognito)
+      location.reload();
+  }
+
   const input = isIncognito ? endText :
     !seen ? inputTexts[0] : randomElement(inputTexts, seen);
 
@@ -89,7 +95,7 @@ export default function Ghostie(): JSX.Element {
           <div id='ghostie' className={isIncognito ? 'incog' : 'reg'}/>
           <div id='fakeInput'>
             <form
-              onSubmit={(e) => { sessionStorage.setItem('ghostie', input); } }
+              onSubmit={(e) => { e.preventDefault(); refresh(); sessionStorage.setItem('ghostie', input); } }
             >
               <div id='input' >
                 <label>
