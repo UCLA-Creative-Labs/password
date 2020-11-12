@@ -3,8 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { FirebaseClassContext } from '../App';
 import Ghostie from './Ghostie';
-import Level1 from './Level1';
-import Level2 from './Level2';
 import MrFrog from './MrFrog';
 import JLevel from './jlevel';
 import TypeRacerLevelWrapper from './TypeRacerLevel';
@@ -23,6 +21,7 @@ interface LevelProps {
   isCompleted: boolean;
   levelUrl: string;
   nextLevelUrl: string;
+  points: number;
 }
 
 export default function Level(props: LevelProps): JSX.Element {
@@ -44,9 +43,18 @@ export default function Level(props: LevelProps): JSX.Element {
     if (!props.isCompleted) return;
 
     if (hasNotReachedLevel(props.nextLevelUrl)) {
-      void context.updateUser({ level: props.nextLevelUrl }).then(() => {
-        setIsCompleted(true);
+      console.log({
+        level: props.nextLevelUrl,
+        score: Number(context?.user?.score) + props.points,
       });
+      void context
+        .updateUser({
+          level: props.nextLevelUrl,
+          score: (context?.user?.score ?? 0) + props.points,
+        })
+        .then(() => {
+          setIsCompleted(true);
+        });
     } else {
       setIsCompleted(true);
     }

@@ -24,13 +24,13 @@ export default function App(): JSX.Element {
       },
       () => {
         setIsSignedIn(false);
-      }
+      },
     );
   }, []);
 
   if (isSignedIn === undefined) {
     return (
-      <div id='loading'>
+      <div id="loading">
         <h1>Loading...</h1>
       </div>
     );
