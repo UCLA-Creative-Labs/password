@@ -18,10 +18,10 @@ const app = firebase.initializeApp(config);
  * The UserInfo that the app needs to process levels
  */
 export interface UserInfo {
-  name?: string;
-  email?: string;
-  level?: string;
-  score?: number;
+  name?: string,
+  email?: string,
+  level?: string,
+  score?: number,
 }
 
 /**

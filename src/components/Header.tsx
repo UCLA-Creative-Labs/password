@@ -10,8 +10,11 @@ function Header(): JSX.Element {
     });
   };
   return (
-    <div id='header'>
-      <button id='signout' onClick={signOut}>Sign Out</button>
+    <div id="header">
+      <p id="score">score: {_firebase?.user?.score}</p>
+      <button id="signout" onClick={signOut}>
+        Sign Out
+      </button>
     </div>
   );
 }

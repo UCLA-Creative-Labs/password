@@ -43,10 +43,6 @@ export default function Level(props: LevelProps): JSX.Element {
     if (!props.isCompleted) return;
 
     if (hasNotReachedLevel(props.nextLevelUrl)) {
-      console.log({
-        level: props.nextLevelUrl,
-        score: Number(context?.user?.score) + props.points,
-      });
       void context
         .updateUser({
           level: props.nextLevelUrl,
