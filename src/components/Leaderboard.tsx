@@ -10,15 +10,16 @@ interface Score {
 }
 function Leaderboard(): JSX.Element {
   const context = useContext(FirebaseClassContext);
+
   const [scores, setScores] = useState<Array<Score>>([]);
   useEffect(() => {
-    context.getTopScores().then((scores: Array<Score>) => {
+    context.getTopScores().then((s: Array<Score>) => {
       setScores(
-        scores
+        s
           .sort(function (a, b) {
             return (b.score || 0) - (a.score || 0);
           })
-          .slice(0, 10)
+          .slice(0, 10),
       );
     });
   }, []);
