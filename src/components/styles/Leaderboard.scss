@@ -1,4 +1,20 @@
-#entry {
-  font-size: medium;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 5vw;
+}
+
+.title {
+  padding: 0;
   margin: 1vw;
+}
+.entryContainer {
+  padding: 0;
+  margin: 0;
+}
+.entry {
+  font-size: medium;
+  margin-bottom: 1vw;
 }

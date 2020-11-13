@@ -23,11 +23,11 @@ function Leaderboard(): JSX.Element {
     });
   }, []);
   return (
-    <div>
-      <p>Leaderboard </p>
-      <ol>
+    <div className="container">
+      <p className="title">Leaderboard </p>
+      <ol className="entryContainer">
         {scores.map((user, i) => (
-          <li id="entry" key={String(user.name) + i}>
+          <li className="entry" key={String(user.name) + i}>
             {user.name} {user.score || 0}
           </li>
         ))}

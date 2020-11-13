@@ -55,8 +55,8 @@ export default function App(): JSX.Element {
   return (
     <FirebaseClassContext.Provider value={_firebase}>
       <div className="app">
-        <Header />
         <Router>
+          <Header />
           <Switch>
             <Route exact path="/" render={Home} />
             {Object.keys(LEVELS).map((levelUrl) => (
