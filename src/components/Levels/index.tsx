@@ -21,7 +21,7 @@ interface LevelProps {
   isCompleted: boolean;
   levelUrl: string;
   nextLevelUrl: string;
-  points: number;
+  points?: number;
 }
 
 export default function Level(props: LevelProps): JSX.Element {
@@ -43,10 +43,11 @@ export default function Level(props: LevelProps): JSX.Element {
     if (!props.isCompleted) return;
 
     if (hasNotReachedLevel(props.nextLevelUrl)) {
+      const points = props.points ?? 100;
       void context
         .updateFirebase({
           level: props.nextLevelUrl,
-          score: (context?.firebase.user?.score ?? 0) + props.points,
+          score: (context?.firebase.user?.score ?? 0) + points,
         })
         .then(() => {
           setIsCompleted(true);

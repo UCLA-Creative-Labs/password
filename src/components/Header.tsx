@@ -7,27 +7,23 @@ import './styles/Header.scss';
 function Header(): JSX.Element {
   const context = useContext(FirebaseClassContext);
   const signOut = () => {
-    void context?.firebase?.signOut().then(() => {
-      window.location.replace('/');
-    });
+    void context?.firebase?.signOut();
   };
+  const level = context?.firebase.user?.level ?? INITIAL_LEVEL;
 
   return (
     <div className="header">
-      <p className="headerItem" id="signOut" onClick={signOut}>
-        logout
-      </p>
-      <Link className="headerItem" to="/leaderboard">
-        leaderboard
+      <Link className="headerItem" to="/" onClick={signOut}>
+        Sign Out
       </Link>
-      <Link
-        className="headerItem"
-        to={'/' + (context?.firebase.user?.level || INITIAL_LEVEL)}
-      >
+      <Link className="headerItem" to="/leaderboard">
+        Leaderboard
+      </Link>
+      <Link className="headerItem" to={`/${level}`}>
         Current Level
       </Link>
       <p className="headerItem" id="score">
-        score: {context?.firebase.user?.score || 0}
+        Score: {context?.firebase.user?.score || 0}
       </p>
     </div>
   );
