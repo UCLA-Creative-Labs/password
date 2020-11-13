@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Level from '../Levels';
 
 export default function Level1(): JSX.Element {
-  const [ isCompleted, setIsCompleted ] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const complete = () => {
     setIsCompleted(true);
@@ -13,9 +13,13 @@ export default function Level1(): JSX.Element {
     <Level
       isCompleted={isCompleted}
       levelUrl={'level1'}
-      nextLevelUrl={'level2'}>
+      nextLevelUrl={'level2'}
+      points={100}
+    >
       <h1>Level1</h1>
-      <p>Click <a onClick={complete}>here</a> to proceed to the next level.</p>
+      <p>
+        Click <a onClick={complete}>here</a> to proceed to the next level.
+      </p>
     </Level>
   );
 }

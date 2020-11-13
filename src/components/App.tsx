@@ -9,6 +9,7 @@ import './styles/App.scss';
 import Error from './404';
 import Header from './Header';
 import Home from './Home';
+import Leaderboard from './Leaderboard';
 import { LEVELS } from './Levels';
 
 export const FirebaseClassContext = createContext(new _Firebase());
@@ -24,7 +25,7 @@ export default function App(): JSX.Element {
       },
       () => {
         setIsSignedIn(false);
-      },
+      }
     );
   }, []);
 
@@ -66,6 +67,7 @@ export default function App(): JSX.Element {
                 render={() => LEVELS[levelUrl]}
               ></Route>
             ))}
+            <Route exact path="/leaderboard" render={() => <Leaderboard />} />
             <Route render={Error} />
           </Switch>
         </Router>

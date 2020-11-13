@@ -14,6 +14,7 @@ export default function Level2(): JSX.Element {
       isCompleted={isCompleted}
       levelUrl={'level2'}
       nextLevelUrl={'shhhh'}
+      points={100}
     >
       <h1>Level2</h1>
       <p>

@@ -18,10 +18,10 @@ const app = firebase.initializeApp(config);
  * The UserInfo that the app needs to process levels
  */
 export interface UserInfo {
-  name?: string,
-  email?: string,
-  level?: string,
-  score?: number,
+  name?: string;
+  email?: string;
+  level?: string;
+  score?: number;
 }
 
 /**
@@ -128,6 +128,20 @@ export class _Firebase {
       .doc(this.auth_user.uid);
     return document.get().then((doc) => {
       return doc.exists ? doc.data() : ternaryOp && ternaryOp(this.auth_user);
+    });
+  }
+
+  /**
+   * GET operation for scores of top X people.
+   */
+  public getTopScores() {
+    if (!this.auth_user) return Promise.resolve(undefined);
+    const users = firebase.firestore().collection('users');
+    return users.get().then((snapshot) => {
+      return snapshot.docs.map((doc) => ({
+        name: doc.get('name'),
+        score: doc.get('score'),
+      }));
     });
   }
 
