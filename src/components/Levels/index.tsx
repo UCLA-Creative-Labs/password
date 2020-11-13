@@ -30,12 +30,12 @@ export default function Level(props: LevelProps): JSX.Element {
   const context = useContext(FirebaseClassContext);
 
   const hasNotReachedLevel = (levelUrl: string): boolean => {
-    if (context?.user?.level === 'admin') return false;
+    if (context?.firebase.user?.level === 'admin') return false;
     const keys = Object.keys(LEVELS);
     return (
-      !context.user ||
-      !context.user.level ||
-      keys.indexOf(context.user.level) < keys.indexOf(levelUrl)
+      !context?.firebase.user ||
+      !context?.firebase.user.level ||
+      keys.indexOf(context?.firebase.user.level) < keys.indexOf(levelUrl)
     );
   };
 
@@ -44,9 +44,9 @@ export default function Level(props: LevelProps): JSX.Element {
 
     if (hasNotReachedLevel(props.nextLevelUrl)) {
       void context
-        .updateUser({
+        .updateFirebase({
           level: props.nextLevelUrl,
-          score: (context?.user?.score ?? 0) + props.points,
+          score: (context?.firebase.user?.score ?? 0) + props.points,
         })
         .then(() => {
           setIsCompleted(true);
@@ -54,17 +54,19 @@ export default function Level(props: LevelProps): JSX.Element {
     } else {
       setIsCompleted(true);
     }
-  }, [props.isCompleted]);
+  }, [props.isCompleted, context.firebase]);
 
   if (isCompleted) {
     return <Redirect to={`/${props.nextLevelUrl}`} />;
-  } else if (!context.user) {
+  } else if (!context?.firebase.user) {
     return <Redirect to={'/'} />;
   } else if (hasNotReachedLevel(props.levelUrl)) {
     return (
       <div>
         <h3>nah ah ah</h3>
-        <Link to={`/${context.user.level}`}>Go back whence you came</Link>
+        <Link to={`/${context?.firebase.user.level}`}>
+          Go back whence you came
+        </Link>
       </div>
     );
   }

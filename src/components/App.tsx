@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { _Firebase } from '../utils/firebase';
+import { UserInfo, _Firebase } from '../utils/firebase';
 
 import './styles/App.scss';
 
@@ -12,14 +12,28 @@ import Home from './Home';
 import Leaderboard from './Leaderboard';
 import { LEVELS } from './Levels';
 
-export const FirebaseClassContext = createContext(new _Firebase());
+export const FirebaseClassContext = createContext({
+  firebase: new _Firebase(),
+  updateFirebase: (_u: UserInfo) => {
+    return new Promise((_x) => {
+      _x;
+    });
+  },
+});
 
 export default function App(): JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState<boolean | undefined>(undefined);
-  const _firebase = useContext(FirebaseClassContext);
-
+  const [firebase, setFirebase] = useState(new _Firebase());
+  function updateFirebase(userInfo: UserInfo) {
+    return firebase.updateUser(userInfo).then(() => {
+      // Copy firebase object so React will detect state change
+      setFirebase(
+        Object.assign(Object.create(Object.getPrototypeOf(firebase)), firebase),
+      );
+    });
+  }
   useEffect(() => {
-    _firebase.load(
+    firebase.load(
       () => {
         setIsSignedIn(true);
       },
@@ -45,15 +59,17 @@ export default function App(): JSX.Element {
           Sign In{' '}
         </div>
         <StyledFirebaseAuth
-          uiConfig={_firebase.uiConfig()}
-          firebaseAuth={_firebase.auth()}
+          uiConfig={firebase.uiConfig()}
+          firebaseAuth={firebase.auth()}
         />
       </div>
     );
   }
 
   return (
-    <FirebaseClassContext.Provider value={_firebase}>
+    <FirebaseClassContext.Provider
+      value={{ firebase: firebase, updateFirebase }}
+    >
       <div className="app">
         <Router>
           <Header />

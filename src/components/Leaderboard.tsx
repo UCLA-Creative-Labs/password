@@ -13,7 +13,7 @@ function Leaderboard(): JSX.Element {
 
   const [scores, setScores] = useState<Array<Score>>([]);
   useEffect(() => {
-    context.getTopScores().then((s: Array<Score>) => {
+    context.firebase.getTopScores().then((s: Array<Score>) => {
       setScores(
         s
           .sort(function (a, b) {

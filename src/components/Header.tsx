@@ -1,22 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FirebaseClassContext } from './App';
+import { INITIAL_LEVEL } from './Levels';
 import './styles/Header.scss';
 
 function Header(): JSX.Element {
   const context = useContext(FirebaseClassContext);
   const signOut = () => {
-    void context.signOut().then(() => {
+    void context?.firebase?.signOut().then(() => {
       window.location.replace('/');
     });
   };
-  const [score, setScore] = useState(0);
-  useEffect(() => {
-    context
-      .getUser()
-      .then((user: { score?: number }) => setScore(user.score || 0))
-      .catch(e => e);
-  }, []);
 
   return (
     <div className="header">
@@ -26,11 +20,14 @@ function Header(): JSX.Element {
       <Link className="headerItem" to="/leaderboard">
         leaderboard
       </Link>
-      <Link className="headerItem" to={'/' + context.user?.level}>
+      <Link
+        className="headerItem"
+        to={'/' + (context?.firebase.user?.level || INITIAL_LEVEL)}
+      >
         Current Level
       </Link>
       <p className="headerItem" id="score">
-        score: {score}
+        score: {context?.firebase.user?.score || 0}
       </p>
     </div>
   );
