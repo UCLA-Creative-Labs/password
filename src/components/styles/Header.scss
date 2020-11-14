@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   height: $header-height;
-  width: 100%;
+  width: 100vw;
   position: fixed;
   top: 0;
   user-select: none;
@@ -14,13 +14,9 @@
 }
 
 .headerItem {
-  margin-right: 0.5em;
+  margin-right: 1em;
   margin-left: 0.5em;
   font-size: medium;
-}
-
-#signOut:hover {
-  text-decoration: underline;
 }
 
 #score {

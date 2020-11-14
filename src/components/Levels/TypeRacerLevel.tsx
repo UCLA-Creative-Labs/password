@@ -1,7 +1,6 @@
 // Identical to level1 except function name and export.
 import React, { useState } from 'react';
 import Countdown from 'react-countdown';
-import { Redirect } from 'react-router-dom';
 import car from '../../assets/typeracercar.jpg';
 import '../styles/TypeRacerLevel.scss';
 import Level from '../Levels';
@@ -94,7 +93,6 @@ function TypeRacerLevelWrapper(): JSX.Element {
       isCompleted={redirect}
       levelUrl={level}
       nextLevelUrl={nextLevel}
-      points={100}
     >
       <TypeRacerLevel
         redirect={redirect}
