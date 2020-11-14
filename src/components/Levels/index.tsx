@@ -7,6 +7,7 @@ import Level1 from './Level1';
 import Level2 from './Level2';
 import MrFrog from './MrFrog';
 import JLevel from './jlevel';
+import BobaShop from './BobaShop';
 import TypeRacerLevelWrapper from './TypeRacerLevel';
 
 // Add new levels here
@@ -15,6 +16,7 @@ export const LEVELS: { [url: string]: JSX.Element } = {
   typeracer: <TypeRacerLevelWrapper />,
   thegreatone: <MrFrog />,
   maze: <JLevel />,
+  ff00ff: <BobaShop />,
 };
 export const INITIAL_LEVEL = 'shhhh';
 
