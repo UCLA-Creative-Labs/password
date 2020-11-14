@@ -18,9 +18,9 @@ const app = firebase.initializeApp(config);
  * The UserInfo that the app needs to process levels
  */
 export interface UserInfo {
-  name?: string,
-  email?: string,
-  level?: string,
+  name?: string;
+  email?: string;
+  level?: string;
 }
 
 /**
@@ -60,17 +60,19 @@ export class _Firebase {
    * @param props the properties to for load
    */
   public load(success: (...args: any[]) => any, fail: (...args: any[]) => any) {
-    void firebase.auth(app).setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    void firebase
+      .auth(app)
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth(app).onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
         this.auth_user = user;
-        void ((!this.user || Object.keys(this.user).length === 0)
+        void (!this.user || Object.keys(this.user).length === 0
           ? this.postUser()
-          : this.getUser())
-          .then((userData) => {
-            this.user = userData;
-            success();
-          });
+          : this.getUser()
+        ).then((userData) => {
+          this.user = userData;
+          success();
+        });
       } else {
         fail();
       }
@@ -106,7 +108,22 @@ export class _Firebase {
    * Sign out and empty this.user
    */
   public signOut(): Promise<any> {
-    return firebase.auth(app).signOut().then(() => this.user = {});
+    return firebase
+      .auth(app)
+      .signOut()
+      .then(() => (this.user = {}));
+  }
+
+  public checkPassword(level: string, guess: string) {
+    if (!this.auth_user) return Promise.resolve(undefined);
+    return firebase
+      .firestore(app)
+      .collection('levels')
+      .doc(level)
+      .get()
+      .then((doc) => {
+        return doc.exists ? doc.data()?.password === guess : false;
+      });
   }
 
   /**
@@ -115,8 +132,11 @@ export class _Firebase {
    * @param ternaryOp if the document doesnt exist, complete this operation
    */
   protected retrieveDocument(ternaryOp?: (...args: any[]) => any) {
-    if(!this.auth_user) return Promise.resolve(undefined);
-    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
+    if (!this.auth_user) return Promise.resolve(undefined);
+    const document = firebase
+      .firestore(app)
+      .collection('users')
+      .doc(this.auth_user.uid);
     return document.get().then((doc) => {
       return doc.exists ? doc.data() : ternaryOp && ternaryOp(this.auth_user);
     });
@@ -142,22 +162,30 @@ export class _Firebase {
    * @param updates the updated user object, defaults to this.user if not passed in
    */
   public updateUser(updates: UserInfo): Promise<any> {
-    if(!this.auth_user) return Promise.resolve(undefined);
-    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
+    if (!this.auth_user) return Promise.resolve(undefined);
+    const document = firebase
+      .firestore(app)
+      .collection('users')
+      .doc(this.auth_user.uid);
     const updatedUser: UserInfo = {
       name: updates.name ?? this.user?.name,
       email: updates.email ?? this.user?.email,
       level: updates.level ?? this.user?.level,
     };
-    return document.update(updatedUser).then(() => { this.user = updatedUser; });
+    return document.update(updatedUser).then(() => {
+      this.user = updatedUser;
+    });
   }
 
   /**
    * PUT operation for the user.
    */
   public putUser(user: firebase.User): UserInfo {
-    if(!user && !this.auth_user) return {};
-    const document = firebase.firestore(app).collection('users').doc(user.uid ?? this.auth_user?.uid);
+    if (!user && !this.auth_user) return {};
+    const document = firebase
+      .firestore(app)
+      .collection('users')
+      .doc(user.uid ?? this.auth_user?.uid);
     const profile = user.providerData[0];
 
     const deets: UserInfo = {
