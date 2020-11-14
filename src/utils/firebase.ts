@@ -138,10 +138,15 @@ export class _Firebase {
     if (!this.auth_user) return Promise.resolve(undefined);
     const users = firebase.firestore().collection('users');
     return users.get().then((snapshot) => {
-      return snapshot.docs.map((doc) => ({
-        name: doc.get('name'),
-        score: doc.get('score'),
-      }));
+      return snapshot.docs
+        .map((doc) => ({
+          name: doc.get('name'),
+          score: doc.get('score'),
+        }))
+        .sort(function (a, b) {
+          return (b.score || 0) - (a.score || 0);
+        })
+        .slice(0, 10);
     });
   }
 

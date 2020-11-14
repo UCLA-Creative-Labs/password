@@ -4,24 +4,14 @@ import './styles/Leaderboard.scss';
 
 interface Score {
   name?: string;
-  email?: string;
-  level?: string;
   score?: number;
 }
 function Leaderboard(): JSX.Element {
   const context = useContext(FirebaseClassContext);
 
-  const [scores, setScores] = useState<Array<Score>>([]);
+  const [scores, setScores] = useState<Score[]>([]);
   useEffect(() => {
-    context.firebase.getTopScores().then((s: Array<Score>) => {
-      setScores(
-        s
-          .sort(function (a, b) {
-            return (b.score || 0) - (a.score || 0);
-          })
-          .slice(0, 10),
-      );
-    });
+    context.firebase.getTopScores().then((s) => setScores(s));
   }, []);
   return (
     <div className="container">
