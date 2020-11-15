@@ -115,6 +115,18 @@ export class _Firebase {
       .then(() => (this.user = {}));
   }
 
+  public checkPassword(level: string, guess: string) {
+    if (!this.auth_user) return Promise.resolve(undefined);
+    return firebase
+      .firestore(app)
+      .collection('levels')
+      .doc(level)
+      .get()
+      .then((doc) => {
+        return doc.exists ? doc.data()?.password === guess : false;
+      });
+  }
+
   /**
    * Retrieves the document on a user and perform an operation
    *
