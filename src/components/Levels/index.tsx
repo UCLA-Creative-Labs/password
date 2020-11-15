@@ -69,7 +69,7 @@ export default function Level(props: LevelProps): JSX.Element {
     return <Redirect to={'/'} />;
   } else if (hasNotReachedLevel(props.levelUrl)) {
     return (
-      <div>
+      <div className='center'>
         <h3>nah ah ah</h3>
         <Link to={`/${context?.firebase.user.level}`}>
           Go back whence you came
