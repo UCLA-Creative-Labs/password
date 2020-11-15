@@ -20,9 +20,9 @@ export default function BobaShop(): JSX.Element {
 
   const handleSubmit = (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
-    context
+    void context.firebase
       .checkPassword('ff00ff', password)
-      .then((correct: Promise<undefined> | Promise<boolean>) => {
+      .then((correct: boolean | undefined) => {
         if (correct) {
           complete();
         } else {

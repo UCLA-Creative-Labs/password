@@ -7,6 +7,7 @@ import { UserInfo, _Firebase } from '../utils/firebase';
 import './styles/App.scss';
 
 import Error from './404';
+import Construction from './Construction';
 import Header from './Header';
 import Home from './Home';
 import Leaderboard from './Leaderboard';
@@ -45,7 +46,7 @@ export default function App(): JSX.Element {
 
   if (isSignedIn === undefined) {
     return (
-      <div id="loading">
+      <div className="center">
         <h1>Loading...</h1>
       </div>
     );
@@ -84,6 +85,7 @@ export default function App(): JSX.Element {
               ></Route>
             ))}
             <Route exact path="/leaderboard" render={() => <Leaderboard />} />
+            <Route exact path="/construction" render={() => <Construction />} />
             <Route render={Error} />
           </Switch>
         </Router>

@@ -3,3 +3,11 @@ body {
   margin: 0;
   font: normal 700 2.6em 'Mulish', sans-serif;
 }
+
+.center {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+}

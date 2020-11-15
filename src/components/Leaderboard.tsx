@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { FirebaseClassContext } from './App';
 import './styles/Leaderboard.scss';
 
-interface Score {
+export interface Score {
   name?: string;
   score?: number;
 }
@@ -11,7 +11,7 @@ function Leaderboard(): JSX.Element {
 
   const [scores, setScores] = useState<Score[]>([]);
   useEffect(() => {
-    context.firebase.getTopScores().then((s) => setScores(s));
+    void context.firebase.getTopScores().then((s) => setScores(s));
   }, []);
   return (
     <div className="container">

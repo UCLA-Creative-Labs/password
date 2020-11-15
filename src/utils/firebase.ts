@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 
+import { Score } from '../components/Leaderboard';
 import { INITIAL_LEVEL } from '../components/Levels';
 
 const config = {
@@ -60,7 +61,7 @@ export class _Firebase {
    *
    * @param props the properties to for load
    */
-  public load(success: (...args: any[]) => any, fail: (...args: any[]) => any) {
+  public load(success: (...args: any[]) => void, fail: (...args: any[]) => void): void {
     void firebase
       .auth(app)
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
@@ -115,7 +116,7 @@ export class _Firebase {
       .then(() => (this.user = {}));
   }
 
-  public checkPassword(level: string, guess: string) {
+  public checkPassword(level: string, guess: string): Promise<boolean | undefined> {
     if (!this.auth_user) return Promise.resolve(undefined);
     return firebase
       .firestore(app)
@@ -146,7 +147,7 @@ export class _Firebase {
   /**
    * GET operation for scores of top X people.
    */
-  public getTopScores() {
+  public getTopScores(): Promise<Score[] | undefined> {
     if (!this.auth_user) return Promise.resolve(undefined);
     const users = firebase.firestore().collection('users');
     return users.get().then((snapshot) => {
