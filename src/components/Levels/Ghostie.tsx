@@ -88,7 +88,8 @@ export default function Ghostie(): JSX.Element {
     <Level
       isCompleted={isCompleted}
       levelUrl={'shhhh'}
-      nextLevelUrl={'typeracer'}>
+      nextLevelUrl={'typeracer'}
+    >
       <div id='background' className={isIncognito ? 'incog' : 'reg'}>
         <div id='wrapper'>
           <div id='ghostie' className={isIncognito ? 'incog' : 'reg'}/>

@@ -1,7 +1,6 @@
 // Identical to level1 except function name and export.
 import React, { useState } from 'react';
 import Countdown from 'react-countdown';
-import { Redirect } from 'react-router-dom';
 import car from '../../assets/typeracercar.jpg';
 import '../styles/TypeRacerLevel.scss';
 import Level from '../Levels';
@@ -90,7 +89,11 @@ function TypeRacerLevelWrapper(): JSX.Element {
   const level = 'typeracer';
   const nextLevel = 'thegreatone';
   return (
-    <Level isCompleted={redirect} levelUrl={level} nextLevelUrl={nextLevel}>
+    <Level
+      isCompleted={redirect}
+      levelUrl={level}
+      nextLevelUrl={nextLevel}
+    >
       <TypeRacerLevel
         redirect={redirect}
         setRedirect={setRedirect}
@@ -135,11 +138,8 @@ function TypeRacerLevel(props: LevelProps): JSX.Element {
     );
   }
   // After finishing the game, there is a 3 second delay before going to the next level.
-  if (props.redirect) {
-    return <Redirect to={props.nextLevel} />;
-  }
   // User beat the game
-  else if (input === prompt && !timeOut) {
+  if (input === prompt && !timeOut) {
     setTimeout(() => props.setRedirect(true), 3000);
     return (
       <div>

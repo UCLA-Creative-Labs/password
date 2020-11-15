@@ -21,6 +21,7 @@ export interface UserInfo {
   name?: string;
   email?: string;
   level?: string;
+  score?: number;
 }
 
 /**
@@ -143,6 +144,25 @@ export class _Firebase {
   }
 
   /**
+   * GET operation for scores of top X people.
+   */
+  public getTopScores() {
+    if (!this.auth_user) return Promise.resolve(undefined);
+    const users = firebase.firestore().collection('users');
+    return users.get().then((snapshot) => {
+      return snapshot.docs
+        .map((doc) => ({
+          name: doc.get('name'),
+          score: doc.get('score'),
+        }))
+        .sort(function (a, b) {
+          return (b.score || 0) - (a.score || 0);
+        })
+        .slice(0, 10);
+    });
+  }
+
+  /**
    * GET operation for the user.
    */
   public getUser(): Promise<any> {
@@ -171,6 +191,7 @@ export class _Firebase {
       name: updates.name ?? this.user?.name,
       email: updates.email ?? this.user?.email,
       level: updates.level ?? this.user?.level,
+      score: updates.score ?? this.user?.score,
     };
     return document.update(updatedUser).then(() => {
       this.user = updatedUser;
@@ -192,6 +213,7 @@ export class _Firebase {
       name: profile?.displayName ?? 'Anonymous User',
       email: profile?.email ?? 'N/A',
       level: INITIAL_LEVEL,
+      score: profile?.score ?? 0,
     };
     void document.set(deets);
     return deets;

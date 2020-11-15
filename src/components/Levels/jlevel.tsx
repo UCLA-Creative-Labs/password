@@ -382,7 +382,11 @@ export default function JLevel(): JSX.Element {
   }
 
   return (
-    <Level isCompleted={isCompleted} levelUrl={'maze'} nextLevelUrl={'ff00ff'}>
+    <Level
+      isCompleted={isCompleted}
+      levelUrl={'maze'}
+      nextLevelUrl={'ff00ff'}
+    >
       <div>
         {RenderHall(hall)}
         <button
