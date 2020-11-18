@@ -49,8 +49,8 @@ export default function Ghostie(): JSX.Element {
 
     function testChrome(){
       if ('storage' in navigator && 'estimate' in navigator.storage) {
-        void navigator.storage.estimate().then(({usage, quota}) => {
-          if(quota && quota < 1200000000) on();
+        void navigator.storage.estimate().then((est) => {
+          if(est.quota && est.quota < 1200000000) on();
         });
       }
     }
