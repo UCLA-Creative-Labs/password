@@ -6,7 +6,7 @@ function Home(): JSX.Element {
   return (
     <div id="homeWrapper">
       <div id="wrapper">
-        <div id="title">Welcome to Spookn&#39;t!</div>
+        <div id="title">Welcome to Password!</div>
         <div id="text">
           A game created by{' '}
           <a
