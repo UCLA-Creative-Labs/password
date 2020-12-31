@@ -154,6 +154,7 @@ export class _Firebase {
       return snapshot.docs
         .map((doc) => ({
           name: doc.get('name'),
+          level: doc.get('level'),
           score: doc.get('score'),
         }))
         .sort(function (a, b) {

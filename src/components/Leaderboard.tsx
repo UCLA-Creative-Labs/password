@@ -4,6 +4,7 @@ import './styles/Leaderboard.scss';
 
 export interface Score {
   name?: string;
+  level?: string;
   score?: number;
 }
 function Leaderboard(): JSX.Element {
@@ -18,9 +19,11 @@ function Leaderboard(): JSX.Element {
       <p className="title">Leaderboard </p>
       <ol className="entryContainer">
         {scores.map((user, i) => (
-          <li className="entry" key={String(user.name) + i}>
-            {user.name} {user.score || 0}
-          </li>
+          user.level != 'admin' && user.score && user.score > 0
+            ? <li className="entry" key={String(user.name) + i}>
+              {user.name} {user.score}
+            </li>
+            : null
         ))}
       </ol>
     </div>
