@@ -279,6 +279,7 @@ export default function JLevel(): JSX.Element {
   }
 
   function Win() {
+    console.log('won');
     setIsCompleted(true);
   }
 
@@ -394,6 +395,7 @@ export default function JLevel(): JSX.Element {
           onClick={() => {
             const r = GetPlayerPos(board).r;
             const c = GetPlayerPos(board).c;
+            console.log(`${r} | ${c}`);
             if (CanMoveDir(board[r][c], dir)) {
               const b = MovePlayer(board, dir);
               setHall(GetHall(b, dir));
@@ -408,7 +410,8 @@ export default function JLevel(): JSX.Element {
           onClick={() => {
             const r = GetPlayerPos(board).r;
             const c = GetPlayerPos(board).c;
-            if (c == 5 && r == 1) {
+            console.log(`${r} | ${c}`);
+            if (c == 4 && r == 1) {
               Win();
             }
             const d = GetDir(dir, 'l');
@@ -427,7 +430,8 @@ export default function JLevel(): JSX.Element {
           onClick={() => {
             const r = GetPlayerPos(board).r;
             const c = GetPlayerPos(board).c;
-            if (c == 5 && r == 1) {
+            console.log(`${r} | ${c}`);
+            if (c == 4 && r == 1) {
               Win();
             }
             const d = GetDir(dir, 'r');
