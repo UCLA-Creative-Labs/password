@@ -1,0 +1,19 @@
+@import 'variables';
+
+.base {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.on {
+  background-color: #f5f5dc;
+}
+
+.off {
+  background-color: #111;
+}
+
+#player {
+  position: absolute;
+}
