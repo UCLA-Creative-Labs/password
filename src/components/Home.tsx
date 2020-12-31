@@ -27,7 +27,7 @@ function Home(): JSX.Element {
           type="button"
           onClick={() => window.location.replace(`/${level}`)}
         >
-          { level == INITIAL_LEVEL ? 'START' : 'CONTINUE' }
+          { level === INITIAL_LEVEL ? 'START' : 'CONTINUE' }
         </button>
       </div>
     </div>
