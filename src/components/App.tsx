@@ -75,7 +75,7 @@ export default function App(): JSX.Element {
         <Router>
           <Header />
           <Switch>
-            <Route exact path="/" render={Home} />
+            <Route exact path="/" render={() => <Home />} />
             {Object.keys(LEVELS).map((levelUrl) => (
               <Route
                 key={levelUrl}

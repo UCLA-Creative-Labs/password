@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { FirebaseClassContext } from './App';
+import { INITIAL_LEVEL } from './Levels';
 
 import './styles/Home.scss';
 
 function Home(): JSX.Element {
+  const context = useContext(FirebaseClassContext);
+  const level = context?.firebase.user?.level ?? INITIAL_LEVEL;
+
   return (
     <div id="homeWrapper">
       <div id="wrapper">
@@ -20,9 +25,9 @@ function Home(): JSX.Element {
         <button
           id="button"
           type="button"
-          onClick={() => window.location.replace('/shhhh')}
+          onClick={() => window.location.replace(`/${level}`)}
         >
-          Start
+          { level == INITIAL_LEVEL ? "START" : "CONTINUE" }
         </button>
       </div>
     </div>
