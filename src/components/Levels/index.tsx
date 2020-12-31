@@ -14,8 +14,8 @@ export const LEVELS: { [url: string]: JSX.Element } = {
   shhhh: <Ghostie />,
   typeracer: <TypeRacerLevelWrapper />,
   thegreatone: <MrFrog />,
-  maze: <JLevel />,
   ff00ff: <BobaShop />,
+  maze: <JLevel />,
 };
 export const INITIAL_LEVEL = 'shhhh';
 
