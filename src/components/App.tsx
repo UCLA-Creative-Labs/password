@@ -86,7 +86,7 @@ export default function App(): JSX.Element {
             ))}
             <Route exact path="/leaderboard" render={() => <Leaderboard />} />
             <Route exact path="/construction" render={() => <Construction />} />
-            <Route render={Error} />
+            <Route render={() => <Error />} />
           </Switch>
         </Router>
       </div>
