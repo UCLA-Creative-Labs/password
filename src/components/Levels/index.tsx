@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { FirebaseClassContext } from '../App';
+import Construction from '../Construction';
 
 import BobaShop from './BobaShop';
 import Ghostie from './Ghostie';
@@ -16,6 +17,7 @@ export const LEVELS: { [url: string]: JSX.Element } = {
   thegreatone: <MrFrog />,
   ff00ff: <BobaShop />,
   maze: <JLevel />,
+  pending: <Construction />,
 };
 export const INITIAL_LEVEL = 'shhhh';
 
@@ -61,10 +63,7 @@ export default function Level(props: LevelProps): JSX.Element {
   }, [props.isCompleted, context.firebase]);
 
   if (isCompleted) {
-    if (Object.keys(LEVELS).indexOf(props.levelUrl) === (Object.keys(LEVELS).length - 1))
-      return <Redirect to={'/construction'} />;
-    else
-      return <Redirect to={`/${props.nextLevelUrl}`} />;
+    return <Redirect to={`/${props.nextLevelUrl}`} />;
   } else if (!context?.firebase.user) {
     return <Redirect to={'/'} />;
   } else if (hasNotReachedLevel(props.levelUrl)) {
