@@ -10,7 +10,7 @@ const prompts = [
   "...she said last time, we're stuck in a time loop...Which really pisses me off because that's what...",
   "Please, take me instead! I scream, grabbing at the two men who took my child. Sorry ma'am, children only” they said, as they continue loading up the last lifeboat on the ship.",
   '"Ah, so it\'s 2020" the time traveller said. "Very early in from the looks of it," he muttered under his breath.',
-  "Tinder is completely useless, and I don't have a single match. If I don't find another way to start a campfire tonight. I'll free to death.",
+  "Tinder is completely useless, and I don't have a single match. If I don't find another way to start a campfire tonight. I'll freeze to death.",
   "It's been almost a decade since I last saw my mother. And she still reminds me every day that if I misbehave again she'll take my hearing too.",
   "They say we have a primal sense, that we can just feel when someone is watching us. It's been a few weeks, and it's clear that you do not have that sense.",
 ];
