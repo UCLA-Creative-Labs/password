@@ -8,12 +8,12 @@ function Error(): JSX.Element {
   const context = useContext(FirebaseClassContext);
   const score = context?.firebase.user?.score ?? 0;
 
-  const [ input, setInput ] = useState<string>("404");
+  const [ input, setInput ] = useState<string>('404');
   const [ msg, setMsg ]
-    = useState<string>("No, seriously, this isn't a puzzle. You're in the wrong place.");
+    = useState<string>('No, seriously, this isn\'t a puzzle. You\'re in the wrong place.');
 
   useEffect(() => {
-    let old = "";
+    let old = '';
     for (const ch of input) {
       if (!isNaN(ch as unknown as number))
         old += ch;
@@ -26,18 +26,17 @@ function Error(): JSX.Element {
       setInput(old.substring(0, 3));
     }
 
-    if (old === "200") {
+    if (old === '200') {
       if (score % 100 === 0)
         void context
           .updateFirebase({
             score: score + 99,
           })
           .then(() => {
-            setMsg(";) Good one.");
-            console.log('exec');
+            setMsg(';) Good one.');
           });
       else
-        setMsg("Nice try, but you only get this bonus once.");
+        setMsg('Nice try, but you only get this bonus once.');
     }
   }, [ input ]);
 
@@ -47,7 +46,7 @@ function Error(): JSX.Element {
         <label>
           <input
             className='error-box'
-            type="text"
+            type='text'
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onPaste={(e) => e.preventDefault()}
