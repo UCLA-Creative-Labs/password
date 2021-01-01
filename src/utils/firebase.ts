@@ -152,8 +152,10 @@ export class _Firebase {
     const users = firebase.firestore().collection('users');
     return users.get().then((snapshot) => {
       return snapshot.docs
+        .filter((doc) => doc.get('level') !== 'admin' && doc.get('score') > 0)
         .map((doc) => ({
           name: doc.get('name'),
+          level: doc.get('level'),
           score: doc.get('score'),
         }))
         .sort(function (a, b) {

@@ -35,7 +35,7 @@ export default function BobaShop(): JSX.Element {
     <Level
       isCompleted={isCompleted}
       levelUrl={'ff00ff'}
-      nextLevelUrl={'level1'}
+      nextLevelUrl={'maze'}
     >
       <div id="container">
         <p className="bigtext">
