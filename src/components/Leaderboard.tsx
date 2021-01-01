@@ -19,7 +19,7 @@ function Leaderboard(): JSX.Element {
       <ol className="entryContainer">
         {scores.map((user, i) => (
           <li className="entry" key={String(user.name) + i}>
-            {user.name} {user.score || 0}
+            {user.name} {user.score}
           </li>
         ))}
       </ol>
