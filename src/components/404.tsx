@@ -30,7 +30,7 @@ function Error(): JSX.Element {
       if (score % 100 === 0)
         void context
           .updateFirebase({
-            score: score + 99,
+            score: score + 1,
           })
           .then(() => {
             setMsg(';) Good one.');
