@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { FirebaseClassContext } from './App';
 
@@ -12,37 +12,31 @@ function Error(): JSX.Element {
   const [ msg, setMsg ]
     = useState<string>('No, seriously, this isn\'t a puzzle. You\'re in the wrong place.');
 
-  useEffect(() => {
-    let old = '';
-    for (const ch of input) {
-      if (!isNaN(ch as unknown as number))
-        old += ch;
-    }
-
-    if (old.length > 3)
-      old = old.substring(0, 3);
-
-    if (old !== input) {
-      setInput(old.substring(0, 3));
-    }
-
-    if (old === '200') {
-      if (score % 100 === 0)
-        void context
-          .updateFirebase({
-            score: score + 1,
-          })
-          .then(() => {
-            setMsg(';) Good one.');
-          });
-      else
-        setMsg('Nice try, but you only get this bonus once.');
-    }
-  }, [ input ]);
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    void context.firebase
+      .checkPassword('404', input)
+      .then((correct: boolean | undefined) => {
+        if (correct) {
+          /* eslint-disable no-bitwise */
+          if (!((score % 100) & 1)){
+            void context.updateFirebase({ score: score + 1 });
+            setMsg('😉 Good one.');
+          } else {
+            setMsg('Nice try, but you only get this bonus once.');
+          }
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1000);
+        } else {
+          setInput('404');
+        }
+      });
+  };
 
   return (
     <div className='center'>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <label>
           <input
             className='error-box'
@@ -53,8 +47,9 @@ function Error(): JSX.Element {
           />
         </label>
       </form>
-      <p>{msg}<br /><br />
-      Now hit <b>Current Level</b> to get back to where you were.</p>
+      <p>
+        {msg}
+      </p>
     </div>
   );
 }
