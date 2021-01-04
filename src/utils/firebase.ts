@@ -26,18 +26,6 @@ export interface UserInfo {
 }
 
 /**
- * The props for the _Firebase Class
- */
-export interface _FirebaseProps {
-  /**
-   * The hook for initializing the _Firebase.load()
-   *
-   * @param b the boolean value to change app state
-   */
-  setIsSignedIn: (b: boolean) => void;
-}
-
-/**
  * The class to perform operations on Firebase
  */
 export class _Firebase {
@@ -53,13 +41,11 @@ export class _Firebase {
   protected auth_user?: firebase.User;
 
   /**
-   * When component mounts, run the this function.
+   * When component mounts, run this function.
    *
    * 1. Set the persistence for the firebase.app to persist locally
    * 2. Sign in the user and store the auth_user
    * 3. Update this.user with through a POST
-   *
-   * @param props the properties to for load
    */
   public load(success: (...args: any[]) => void, fail: (...args: any[]) => void): void {
     void firebase
@@ -216,7 +202,7 @@ export class _Firebase {
       name: profile?.displayName ?? 'Anonymous User',
       email: profile?.email ?? 'N/A',
       level: INITIAL_LEVEL,
-      score: profile?.score ?? 0,
+      score: 0,
     };
     void document.set(deets);
     return deets;
