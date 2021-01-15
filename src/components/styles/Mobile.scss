@@ -1,0 +1,35 @@
+#background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  padding-bottom: 10vh;
+}
+
+#wrapper {
+  display: grid;
+  place-items: center;
+  height: auto;
+  width: 100vw;
+}
+
+#ghostie {
+  width: 292px;
+  height: 300px;
+}
+
+#ghostie.reg {
+  background-image: url('../../assets/ghostie-reg.svg');
+}
+
+#ghostie.incog {
+  background-image: url('../../assets/ghostie-incog.svg');
+}
+
+.bigtext {
+  font-size: min(1.8rem, 22px);
+  margin: 40px 0;
+}
