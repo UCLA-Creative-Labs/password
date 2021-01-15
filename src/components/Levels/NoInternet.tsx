@@ -128,7 +128,7 @@ export default function NoInternet(): JSX.Element {
   return (
     <Level
       levelUrl='lightsout'
-      nextLevelUrl='pending'
+      nextLevelUrl='onthego'
       isCompleted={isCompleted}
     >
       <div

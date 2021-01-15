@@ -7,8 +7,9 @@ import Construction from '../Construction';
 import BobaShop from './BobaShop';
 import Ghostie from './Ghostie';
 import JLevel from './jlevel';
+import Mobile from './Mobile';
 import MrFrog from './MrFrog';
-import NoInternet from './NoInternet.tsx';
+import NoInternet from './NoInternet';
 import TypeRacerLevelWrapper from './TypeRacerLevel';
 
 // Add new levels here
@@ -19,6 +20,7 @@ export const LEVELS: { [url: string]: JSX.Element } = {
   ff00ff: <BobaShop />,
   maze: <JLevel />,
   lightsout: <NoInternet />,
+  onthego: <Mobile />,
   pending: <Construction />,
 };
 export const INITIAL_LEVEL = 'shhhh';
