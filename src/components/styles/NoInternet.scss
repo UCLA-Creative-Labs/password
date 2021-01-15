@@ -66,3 +66,15 @@ $target-color: #befdb7;
   background-image: url('../../assets/arrowkeys.png');
   opacity: 0.5;
 }
+
+#mobile-base {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: $bg-color;
+  padding-bottom: 10vh;
+}
