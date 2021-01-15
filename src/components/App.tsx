@@ -1,24 +1,40 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { _Firebase } from '../utils/firebase';
+import { UserInfo, _Firebase } from '../utils/firebase';
 
 import './styles/App.scss';
 
-import Header from './Header';
 import Error from './404';
+import Construction from './Construction';
+import Header from './Header';
 import Home from './Home';
+import Leaderboard from './Leaderboard';
 import { LEVELS } from './Levels';
 
-export const FirebaseClassContext = createContext(new _Firebase());
+export const FirebaseClassContext = createContext({
+  firebase: new _Firebase(),
+  updateFirebase: (_u: UserInfo) => {
+    return new Promise((_x) => {
+      _x;
+    });
+  },
+});
 
 export default function App(): JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState<boolean | undefined>(undefined);
-  const _firebase = useContext(FirebaseClassContext);
-
+  const [firebase, setFirebase] = useState(new _Firebase());
+  function updateFirebase(userInfo: UserInfo) {
+    return firebase.updateUser(userInfo).then(() => {
+      // Copy firebase object so React will detect state change
+      setFirebase(
+        Object.assign(Object.create(Object.getPrototypeOf(firebase)), firebase),
+      );
+    });
+  }
   useEffect(() => {
-    _firebase.load(
+    firebase.load(
       () => {
         setIsSignedIn(true);
       },
@@ -30,7 +46,7 @@ export default function App(): JSX.Element {
 
   if (isSignedIn === undefined) {
     return (
-      <div>
+      <div className="center">
         <h1>Loading...</h1>
       </div>
     );
@@ -44,20 +60,22 @@ export default function App(): JSX.Element {
           Sign In{' '}
         </div>
         <StyledFirebaseAuth
-          uiConfig={_firebase.uiConfig()}
-          firebaseAuth={_firebase.auth()}
+          uiConfig={firebase.uiConfig()}
+          firebaseAuth={firebase.auth()}
         />
       </div>
     );
   }
 
   return (
-    <FirebaseClassContext.Provider value={_firebase}>
+    <FirebaseClassContext.Provider
+      value={{ firebase: firebase, updateFirebase }}
+    >
       <div className="app">
-        <Header />
         <Router>
+          <Header />
           <Switch>
-            <Route exact path="/" render={Home} />
+            <Route exact path="/" render={() => <Home />} />
             {Object.keys(LEVELS).map((levelUrl) => (
               <Route
                 key={levelUrl}
@@ -66,7 +84,9 @@ export default function App(): JSX.Element {
                 render={() => LEVELS[levelUrl]}
               ></Route>
             ))}
-            <Route render={Error} />
+            <Route exact path="/leaderboard" render={() => <Leaderboard />} />
+            <Route exact path="/construction" render={() => <Construction />} />
+            <Route render={() => <Error />} />
           </Switch>
         </Router>
       </div>

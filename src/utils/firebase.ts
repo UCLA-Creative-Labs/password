@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 
+import { Score } from '../components/Leaderboard';
 import { INITIAL_LEVEL } from '../components/Levels';
 
 const config = {
@@ -18,21 +19,10 @@ const app = firebase.initializeApp(config);
  * The UserInfo that the app needs to process levels
  */
 export interface UserInfo {
-  name?: string,
-  email?: string,
-  level?: string,
-}
-
-/**
- * The props for the _Firebase Class
- */
-export interface _FirebaseProps {
-  /**
-   * The hook for initializing the _Firebase.load()
-   *
-   * @param b the boolean value to change app state
-   */
-  setIsSignedIn: (b: boolean) => void;
+  name?: string;
+  email?: string;
+  level?: string;
+  score?: number;
 }
 
 /**
@@ -51,26 +41,26 @@ export class _Firebase {
   protected auth_user?: firebase.User;
 
   /**
-   * When component mounts, run the this function.
+   * When component mounts, run this function.
    *
    * 1. Set the persistence for the firebase.app to persist locally
    * 2. Sign in the user and store the auth_user
    * 3. Update this.user with through a POST
-   *
-   * @param props the properties to for load
    */
-  public load(success: (...args: any[]) => any, fail: (...args: any[]) => any) {
-    void firebase.auth(app).setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+  public load(success: (...args: any[]) => void, fail: (...args: any[]) => void): void {
+    void firebase
+      .auth(app)
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth(app).onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
         this.auth_user = user;
-        void ((!this.user || Object.keys(this.user).length === 0)
+        void (!this.user || Object.keys(this.user).length === 0
           ? this.postUser()
-          : this.getUser())
-          .then((userData) => {
-            this.user = userData;
-            success();
-          });
+          : this.getUser()
+        ).then((userData) => {
+          this.user = userData;
+          success();
+        });
       } else {
         fail();
       }
@@ -106,7 +96,22 @@ export class _Firebase {
    * Sign out and empty this.user
    */
   public signOut(): Promise<any> {
-    return firebase.auth(app).signOut().then(() => this.user = {});
+    return firebase
+      .auth(app)
+      .signOut()
+      .then(() => (this.user = {}));
+  }
+
+  public checkPassword(level: string, guess: string): Promise<boolean | undefined> {
+    if (!this.auth_user) return Promise.resolve(undefined);
+    return firebase
+      .firestore(app)
+      .collection('levels')
+      .doc(level)
+      .get()
+      .then((doc) => {
+        return doc.exists ? doc.data()?.password === guess : false;
+      });
   }
 
   /**
@@ -115,10 +120,34 @@ export class _Firebase {
    * @param ternaryOp if the document doesnt exist, complete this operation
    */
   protected retrieveDocument(ternaryOp?: (...args: any[]) => any) {
-    if(!this.auth_user) return Promise.resolve(undefined);
-    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
+    if (!this.auth_user) return Promise.resolve(undefined);
+    const document = firebase
+      .firestore(app)
+      .collection('users')
+      .doc(this.auth_user.uid);
     return document.get().then((doc) => {
       return doc.exists ? doc.data() : ternaryOp && ternaryOp(this.auth_user);
+    });
+  }
+
+  /**
+   * GET operation for scores of top X people.
+   */
+  public getTopScores(): Promise<Score[] | undefined> {
+    if (!this.auth_user) return Promise.resolve(undefined);
+    const users = firebase.firestore().collection('users');
+    return users.get().then((snapshot) => {
+      return snapshot.docs
+        .filter((doc) => doc.get('level') !== 'admin' && doc.get('score') > 0)
+        .map((doc) => ({
+          name: doc.get('name'),
+          level: doc.get('level'),
+          score: doc.get('score'),
+        }))
+        .sort(function (a, b) {
+          return (b.score || 0) - (a.score || 0);
+        })
+        .slice(0, 10);
     });
   }
 
@@ -142,28 +171,38 @@ export class _Firebase {
    * @param updates the updated user object, defaults to this.user if not passed in
    */
   public updateUser(updates: UserInfo): Promise<any> {
-    if(!this.auth_user) return Promise.resolve(undefined);
-    const document = firebase.firestore(app).collection('users').doc(this.auth_user.uid);
+    if (!this.auth_user) return Promise.resolve(undefined);
+    const document = firebase
+      .firestore(app)
+      .collection('users')
+      .doc(this.auth_user.uid);
     const updatedUser: UserInfo = {
       name: updates.name ?? this.user?.name,
       email: updates.email ?? this.user?.email,
       level: updates.level ?? this.user?.level,
+      score: updates.score ?? this.user?.score,
     };
-    return document.update(updatedUser).then(() => { this.user = updatedUser; });
+    return document.update(updatedUser).then(() => {
+      this.user = updatedUser;
+    });
   }
 
   /**
    * PUT operation for the user.
    */
   public putUser(user: firebase.User): UserInfo {
-    if(!user && !this.auth_user) return {};
-    const document = firebase.firestore(app).collection('users').doc(user.uid ?? this.auth_user?.uid);
+    if (!user && !this.auth_user) return {};
+    const document = firebase
+      .firestore(app)
+      .collection('users')
+      .doc(user.uid ?? this.auth_user?.uid);
     const profile = user.providerData[0];
 
     const deets: UserInfo = {
       name: profile?.displayName ?? 'Anonymous User',
       email: profile?.email ?? 'N/A',
       level: INITIAL_LEVEL,
+      score: 0,
     };
     void document.set(deets);
     return deets;

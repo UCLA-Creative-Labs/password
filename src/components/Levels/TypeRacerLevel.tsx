@@ -1,7 +1,6 @@
 // Identical to level1 except function name and export.
 import React, { useState } from 'react';
 import Countdown from 'react-countdown';
-import { Redirect } from 'react-router-dom';
 import car from '../../assets/typeracercar.jpg';
 import '../styles/TypeRacerLevel.scss';
 import Level from '../Levels';
@@ -11,7 +10,7 @@ const prompts = [
   "...she said last time, we're stuck in a time loop...Which really pisses me off because that's what...",
   "Please, take me instead! I scream, grabbing at the two men who took my child. Sorry ma'am, children only” they said, as they continue loading up the last lifeboat on the ship.",
   '"Ah, so it\'s 2020" the time traveller said. "Very early in from the looks of it," he muttered under his breath.',
-  "Tinder is completely useless, and I don't have a single match. If I don't find another way to start a campfire tonight. I'll free to death.",
+  "Tinder is completely useless, and I don't have a single match. If I don't find another way to start a campfire tonight. I'll freeze to death.",
   "It's been almost a decade since I last saw my mother. And she still reminds me every day that if I misbehave again she'll take my hearing too.",
   "They say we have a primal sense, that we can just feel when someone is watching us. It's been a few weeks, and it's clear that you do not have that sense.",
 ];
@@ -88,9 +87,13 @@ function TextPrompt({ prompt, setPrompt }: PromptProps): JSX.Element {
 function TypeRacerLevelWrapper(): JSX.Element {
   const [redirect, setRedirect] = useState(false);
   const level = 'typeracer';
-  const nextLevel = 'level4';
+  const nextLevel = 'thegreatone';
   return (
-    <Level isCompleted={redirect} levelUrl={level} nextLevelUrl={nextLevel}>
+    <Level
+      isCompleted={redirect}
+      levelUrl={level}
+      nextLevelUrl={nextLevel}
+    >
       <TypeRacerLevel
         redirect={redirect}
         setRedirect={setRedirect}
@@ -135,11 +138,8 @@ function TypeRacerLevel(props: LevelProps): JSX.Element {
     );
   }
   // After finishing the game, there is a 3 second delay before going to the next level.
-  if (props.redirect) {
-    return <Redirect to={props.nextLevel} />;
-  }
   // User beat the game
-  else if (input === prompt && !timeOut) {
+  if (input === prompt && !timeOut) {
     setTimeout(() => props.setRedirect(true), 3000);
     return (
       <div>
