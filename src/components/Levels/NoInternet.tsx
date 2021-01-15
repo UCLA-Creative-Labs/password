@@ -170,6 +170,9 @@ export default function NoInternet(): JSX.Element {
         >
           (turn the 💡 out!)
         </div>
+
+        <div id={'arrows'}>
+        </div>
       </div>
     </Level>
   );

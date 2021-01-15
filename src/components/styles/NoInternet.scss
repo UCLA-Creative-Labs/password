@@ -57,3 +57,12 @@ $target-color: #befdb7;
   left: calc(50% - 170px);
   color: #888;
 }
+
+#arrows {
+  position: fixed;
+  bottom: 0;
+  width: 200px;
+  height: 170px;
+  background-image: url('../../assets/arrowkeys.png');
+  opacity: 0.5;
+}
