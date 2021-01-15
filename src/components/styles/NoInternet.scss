@@ -1,19 +1,63 @@
 @import 'variables';
 
-.base {
+$fg-color: #111;
+$bg-color: #f5f5dc;
+$target-color: #befdb7;
+
+#base {
   display: flex;
   height: 100vh;
   width: 100%;
 }
 
-.on {
-  background-color: #f5f5dc;
+#base.on {
+  background-color: $bg-color;
 }
 
-.off {
-  background-color: #111;
+#base.off {
+  background-color: $fg-color;
+}
+
+#player {
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 99;
+}
+
+#player.on {
+  color: $fg-color;
+}
+
+#player.off {
+  color: $bg-color;
 }
 
 #player {
   position: absolute;
+}
+
+#target {
+  position: absolute;
+  color: $target-color;
+  z-index: 2;
+}
+
+#countdown {
+  position: absolute;
+  width: 1ch;
+  height: 1em;
+  font-size: 256px;
+  top: calc(50% - 0.5em);
+  left: calc(50% - 0.5ch);
+  color: #888;
+}
+
+#hint {
+  position: absolute;
+  width: 340px;
+  top: calc(50% + 3em);
+  left: calc(50% - 170px);
+  color: #888;
 }
