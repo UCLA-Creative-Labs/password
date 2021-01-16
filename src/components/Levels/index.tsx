@@ -9,6 +9,7 @@ import Ghostie from './Ghostie';
 import JLevel from './jlevel';
 import Mobile from './Mobile';
 import MrFrog from './MrFrog';
+import NoInternet from './NoInternet';
 import TypeRacerLevelWrapper from './TypeRacerLevel';
 
 // Add new levels here
@@ -18,6 +19,7 @@ export const LEVELS: { [url: string]: JSX.Element } = {
   thegreatone: <MrFrog />,
   ff00ff: <BobaShop />,
   maze: <JLevel />,
+  lightsout: <NoInternet />,
   onthego: <Mobile />,
   pending: <Construction />,
 };

@@ -1,0 +1,80 @@
+@import 'variables';
+
+$fg-color: #111;
+$bg-color: #f5f5dc;
+$target-color: #befdb7;
+
+#base {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+#base.on {
+  background-color: $bg-color;
+}
+
+#base.off {
+  background-color: $fg-color;
+}
+
+#player {
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 99;
+}
+
+#player.on {
+  color: $fg-color;
+}
+
+#player.off {
+  color: $bg-color;
+}
+
+#target {
+  position: absolute;
+  color: $target-color;
+  z-index: 2;
+}
+
+#countdown {
+  position: absolute;
+  width: 1ch;
+  height: 1em;
+  font-size: 256px;
+  top: calc(50% - 0.5em);
+  left: calc(50% - 0.5ch);
+  color: #888;
+}
+
+#hint {
+  position: absolute;
+  width: 340px;
+  top: calc(50% + 3em);
+  left: calc(50% - 170px);
+  color: #888;
+}
+
+#arrows {
+  position: fixed;
+  bottom: 0;
+  width: 200px;
+  height: 170px;
+  background-image: url('../../assets/arrowkeys.png');
+  opacity: 0.5;
+}
+
+#mobile-base {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: $bg-color;
+  padding-bottom: 10vh;
+}
