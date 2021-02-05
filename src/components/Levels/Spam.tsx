@@ -15,19 +15,38 @@ import Level from '../Levels';
 
 export default function Spam(): JSX.Element {
   const [isCompleted, setIsCompleted] = useState(false);
-  const [nads, setNads] = useState(5);
-  const [spam, setSpam] = useState([]);
+  const [nads, setNads] = useState(7);
+  const [spam, setSpam] = useState([true,true,true,true,true,true,true]);
+  const [windows, setWindows] = useState(null);
+
+//  useEffect(() => {
+//    initSpam();
+//  }, []);
 
   useEffect(() => {
-    initSpam();
-  }, []);
+    const timer = setTimeout(() => {
+      let check = false;
+      let ind = -1;
+      for(let i = 0; i < spam.length; i++){
+        if(spam[i]){
+          check = true;
+        } else {
+          ind = i;
+        }
+      }
+      if(check){
+        openSpam();
+      } else {
+        setIsCompleted(true);
+      }
+    }, 3000);
+  }, [spam]);
 
   function initSpam() {
     let tsp = []
     for(let i = 0; i < nads; i++){
-      const adn = 'ad'+randInt(9);
-      const ad = getAd(adn);
-      tsp.push(<img className='spam' src={ad}/>);
+      const spamad = randSpam();
+      tsp.push(true);
     }
     setSpam(tsp);
   }
@@ -57,13 +76,13 @@ export default function Spam(): JSX.Element {
     }
   }
 
-  function RenderDisplay(): JSX.Element {
+  function RenderDisplay(lst): JSX.Element {
     const top = 50+'%';
     const left = 50+'%';
     return (
       <div>
         <img className='displayImg' src={back}/>
-        {RenderSpam()}
+        {RenderSpam(lst)}
       </div>
     );
   }
@@ -72,20 +91,72 @@ export default function Spam(): JSX.Element {
     return Math.floor(Math.random()*Math.floor(max));
   }
 
-  function randOff(){
+  function randOff() {
     return randInt(80)+'%';
   }
 
-  function RenderSpam(): JSX.Element {
-    
+  function randSpam() {
+    const adn = 'ad'+randInt(10);
+    const ad = getAd(adn);
+    const spamad = <img className='spam' src={ad}/>;
+    return spamad;
+  }
 
+  function closeSpam() {
+    let tsp = [];
+    for(let i = 0; i < spam.length; i++){
+      if(spam[i]){
+        tsp.push(true);
+      } else {
+        tsp.push(false);
+      }
+    }
+    for(let i = 0; i < nads; i++){
+      if(tsp[i]){
+        tsp[i] = false;
+        setSpam(tsp);
+	return;
+      }
+    }
+  }
+
+  function openSpam() {
+    let tsp = [];
+    for(let i = 0; i < spam.length; i++){
+      if(spam[i]){
+        tsp.push(true);
+      } else {
+        tsp.push(false);
+      }
+    }
+    for(let i = 0; i < tsp.length; i++){
+      if(!tsp[i]){
+        tsp[i] = true;
+	setSpam(tsp);
+	return;
+      }
+    }
+  }
+
+  function RenderSpam(lst): JSX.Element {
+    const spamcont = lst.map((sp) => {
+	    const left = randOff();
+	    const top = randOff();
+	    const el = randSpam();
+	    const randkey = randInt(9999)+'key';
+	    if(sp){
+	      return <div
+                style={{position:'absolute',left:left,top:top}}
+	        onClick={closeSpam}
+		key={randkey}
+		class='spammy'
+                >{el}
+	      </div>
+	    }
+	  });
     return (
       <div>
-        {spam.map((sp) => {
-	  const left = randOff();
-	  const top = randOff();
-	  return <div style={{position:'absolute',left:left,top:top}}>{sp}</div>
-	})}
+        {spamcont}
       </div>
     );
   }
@@ -97,7 +168,7 @@ export default function Spam(): JSX.Element {
       nextLevelUrl={'pending'}
     >
       <div>
-        {RenderDisplay()}
+        {RenderDisplay(spam)}
       </div>
     </Level>
   );
