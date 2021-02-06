@@ -16,24 +16,26 @@ import Level from '../Levels';
 export default function Spam(): JSX.Element {
   const [isCompleted, setIsCompleted] = useState(false);
   const nads = 7;
-  const [spam, setSpam] = useState([true,true,true,true,true,true,true]);
+  const [spam, setSpam] = useState([]);
 
-  //when spam is modified start a timer that pops up more if it's not all cleared by  the end
   useEffect(() => {
-    setTimeout(() => {
-      let check = false;
-      for(let i = 0; i < spam.length; i++){
-        if(spam[i]){
-          check = true;
-        }
-      }
-      if(check){
-        openSpam();
-      } else {
-        setIsCompleted(true);
-      }
-    }, 3000);
-  }, [spam]);
+    initSpam();
+  }, []);
+
+  function initSpam() {
+    let tsp = [];
+    tsp = [];
+    for(let i = 0; i < nads; i++){
+      const nsp = {
+        top: randOff(),
+        left: randOff(),
+        key: randInt(9999)+'key',
+        el: randSpam(),
+      };
+      tsp.push(nsp);
+    }
+    setSpam(tsp);
+  }
 
   function getAd(adn) {
     switch(adn) {
@@ -84,59 +86,59 @@ export default function Spam(): JSX.Element {
     return spamad;
   }
 
-  function closeSpam() {
+  function closeSpam(k) {
     let tsp = [];
-    tsp = [];
     for(let i = 0; i < spam.length; i++){
-      if(spam[i]){
-        tsp.push(true);
-      } else {
-        tsp.push(false);
+      tsp.push(spam[i]);
+    }
+    for(let i = 0; i < tsp.length; i++){
+      if(tsp[i].key == k){
+        console.log(tsp);
+	console.log(tsp[i]);
+        tsp.splice(i, 1);
       }
     }
-    for(let i = 0; i < nads; i++){
-      if(tsp[i]){
-        tsp[i] = false;
-        setSpam(tsp);
-        return;
-      }
+    if(tsp.length == 0){
+      setIsCompleted(true);
+      return;
     }
+    const timer = setTimeout(() => {
+      let n = spam.length;
+      if(n != 0 && n < nads && !isCompleted){
+        openSpam();
+      }
+    }, 1000);
+    setSpam(tsp);
   }
 
   function openSpam() {
+    if(spam.length >= nads || isCompleted){
+      return;
+    }
     let tsp = [];
     tsp = [];
     for(let i = 0; i < spam.length; i++){
-      if(spam[i]){
-        tsp.push(true);
-      } else {
-        tsp.push(false);
-      }
+      tsp.push(spam[i]);
     }
-    for(let i = 0; i < tsp.length; i++){
-      if(!tsp[i]){
-        tsp[i] = true;
-        setSpam(tsp);
-        return;
-      }
-    }
+    const nsp = {
+     top: randOff(),
+     left: randOff(),
+     key: randInt(9999)+'key',
+     el: randSpam(),
+    };
+    tsp.push(nsp);
+    setSpam(tsp);
   }
 
   function RenderSpam(lst): JSX.Element {
     const spamcont = lst.map((sp) => {
-      const left = randOff();
-      const top = randOff();
-      const el = randSpam();
-      const randkey = randInt(9999)+'key';
-      if(sp){
-        return <div
-          style={{position: 'absolute',left: left,top: top}}
-          onClick={closeSpam}
-          key={randkey}
-          className='spammy'
-        >{el}
-        </div>;
-      }
+      return <div
+        style={{position: 'absolute',left: sp.left,top: sp.top}}
+        onClick={() => closeSpam(sp.key)}
+        className='spammy'
+	key={sp.key}
+      >{sp.el}
+      </div>;
     });
     return (
       <div>
