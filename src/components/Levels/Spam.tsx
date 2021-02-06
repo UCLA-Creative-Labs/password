@@ -88,13 +88,12 @@ export default function Spam(): JSX.Element {
 
   function closeSpam(k) {
     let tsp = [];
+    tsp = [];
     for(let i = 0; i < spam.length; i++){
       tsp.push(spam[i]);
     }
     for(let i = 0; i < tsp.length; i++){
       if(tsp[i].key == k){
-        console.log(tsp);
-	console.log(tsp[i]);
         tsp.splice(i, 1);
       }
     }
@@ -102,8 +101,8 @@ export default function Spam(): JSX.Element {
       setIsCompleted(true);
       return;
     }
-    const timer = setTimeout(() => {
-      let n = spam.length;
+    setTimeout(() => {
+      const n = spam.length;
       if(n != 0 && n < nads && !isCompleted){
         openSpam();
       }
@@ -121,10 +120,10 @@ export default function Spam(): JSX.Element {
       tsp.push(spam[i]);
     }
     const nsp = {
-     top: randOff(),
-     left: randOff(),
-     key: randInt(9999)+'key',
-     el: randSpam(),
+      top: randOff(),
+      left: randOff(),
+      key: randInt(9999)+'key',
+      el: randSpam(),
     };
     tsp.push(nsp);
     setSpam(tsp);
@@ -136,7 +135,7 @@ export default function Spam(): JSX.Element {
         style={{position: 'absolute',left: sp.left,top: sp.top}}
         onClick={() => closeSpam(sp.key)}
         className='spammy'
-	key={sp.key}
+        key={sp.key}
       >{sp.el}
       </div>;
     });
